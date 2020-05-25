@@ -1,0 +1,56 @@
+---
+pt-BR:
+  activerecord:
+    models:
+      user: Usuário
+    attributes:
+      user:
+        name: Nome
+        username: Username
+        password: Senha
+        password_confirmation: Confirmação de Senha
+        active: Ativo
+        created_at: Data de Criação
+        indicator_direct_id: Indicado por
+        is_primary: Primário?
+        role:
+          root: Root
+          member: Membro Clube
+          client: Cliente
+        key_binary:
+          left: Esquerda
+          right: Direita
+        key_binary_type:
+          binary_key_auto: Automático
+          binary_key_left: Esquerda
+          binary_key_right: Direita
+        parent_binary_id: Usuário Acima
+        consultant_type:
+          not_consultant: Não Consultor
+          basic: Basic
+          standard: Standard
+          premium: Premium
+      member:
+        birthday: Data de Nascimento
+        phone: Telefone
+        email: E-mail
+        address: Endereço
+        zipcode: CEP
+        number: Número
+        complement: Complemento
+        district: Bairro
+        address_reference: Ponto de Referência
+        mother_name: Nome da Mãe
+        gender:
+          male: Masculino
+          female: Feminino
+          undefined: Indefinido
+        marital_status:
+          single: Solteiro
+          married: Casado
+          divorced: Divorciado
+          widower: Viúvo
+        member_type:
+          cpf: CPF
+          cnpj: CNPJ
+          mei: MEI
