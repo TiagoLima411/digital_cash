@@ -3,6 +3,7 @@ pt-BR:
   activerecord:
     models:
       user: Usuário
+      account: Conta
     attributes:
       user:
         name: Nome
@@ -54,3 +55,9 @@ pt-BR:
           cpf: CPF
           cnpj: CNPJ
           mei: MEI
+      account:
+        agency_number: Número da Agência
+        account_number: Número da Conta
+        account_type:
+          cc: Conta Corrente
+          cp: Conta Poupança

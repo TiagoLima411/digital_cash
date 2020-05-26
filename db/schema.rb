@@ -10,9 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_24_190955) do
+ActiveRecord::Schema.define(version: 2020_05_26_010001) do
 
-  create_table "banks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "bank_id"
+    t.boolean "active", default: true
+    t.string "agency_number"
+    t.string "account_number"
+    t.integer "account_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bank_id"], name: "index_accounts_on_bank_id"
+    t.index ["user_id"], name: "index_accounts_on_user_id"
+  end
+
+  create_table "banks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
     t.string "name"
     t.string "code"
     t.datetime "created_at", null: false
@@ -80,6 +93,8 @@ ActiveRecord::Schema.define(version: 2020_05_24_190955) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "accounts", "banks"
+  add_foreign_key "accounts", "users"
   add_foreign_key "cities", "states"
   add_foreign_key "members", "cities"
   add_foreign_key "members", "states"

@@ -11,13 +11,18 @@
           </li>
         </ul>
       </li>
-
-      <li class=" nav-item" id="cadastro-user">
-        <a href="#"><i><%= image_tag "cadastrar_ico.svg", width:"20px" %></i><span class="menu-title" data-i18n="">Cadastros</span></a>
-        <ul class="menu-content">
-          <li class="" id="my-account-user"><a class="menu-item" href="/account/new">Conta</a></li>
-        </ul>
-      </li>
+        <li class=" nav-item" id="cadastro-user">
+          <a href="#"><i><%= image_tag "cadastrar_ico.svg", width:"20px" %></i><span class="menu-title" data-i18n="">Cadastros</span></a>
+          <% if current_user.account.nil? %>
+            <ul class="menu-content">
+              <li class="" id="my-account-user"><a class="menu-item" href="/accounts/new">Conta</a></li>
+            </ul>
+          <% else %>
+            <ul class="menu-content">
+              <li class="" id="my-account-user"><a class="menu-item" href="/accounts/<%= current_user.account.id %>/edit">Editar</a></li>
+            </ul>
+          <% end %>
+        </li>
 
       <li class=" nav-item" id="finances-user">
         <a href="#"><i><%= image_tag "transacoes_menu_icon.svg", width:"20px" %></i><span class="menu-title" data-i18n="">Financeiro</span></a>
