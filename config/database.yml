@@ -60,9 +60,9 @@ homologation:
 
 production:
   <<: *default
-  database: nobe #onpax_licenciado_production
-  username: root #onpax_licenciado
-  password: #password #<%= ENV['ONPAX_LICENCIADO_DATABASE_PASSWORD'] %>
+  database: ENV['DATABASE_URL']
+  username: ENV['CLEARDB_DATABASE_USERNAME']
+  password: ENV['CLEARDB_DATABASE_PASSWORDs']
   host: #host
   variables:
     sql_mode: TRADITIONAL
