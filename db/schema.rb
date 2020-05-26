@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_26_091642) do
+ActiveRecord::Schema.define(version: 2020_05_26_094923) do
 
   create_table "account_balances", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
@@ -18,6 +18,20 @@ ActiveRecord::Schema.define(version: 2020_05_26_091642) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_account_balances_on_user_id"
+  end
+
+  create_table "account_extracts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "account_balance_id"
+    t.integer "reference_id"
+    t.integer "value_cents"
+    t.integer "balance_cents"
+    t.string "description"
+    t.integer "type_register"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_balance_id"], name: "index_account_extracts_on_account_balance_id"
+    t.index ["user_id"], name: "index_account_extracts_on_user_id"
   end
 
   create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -49,6 +63,16 @@ ActiveRecord::Schema.define(version: 2020_05_26_091642) do
     t.index ["state_id"], name: "index_cities_on_state_id"
   end
 
+  create_table "incomes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.integer "intype"
+    t.integer "value_cents"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_incomes_on_user_id"
+  end
+
   create_table "members", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -71,6 +95,16 @@ ActiveRecord::Schema.define(version: 2020_05_26_091642) do
     t.datetime "updated_at", null: false
     t.index ["city_id"], name: "index_members_on_city_id"
     t.index ["state_id"], name: "index_members_on_state_id"
+  end
+
+  create_table "outgoings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.integer "outtype"
+    t.integer "value_cents"
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_outgoings_on_user_id"
   end
 
   create_table "states", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -102,10 +136,14 @@ ActiveRecord::Schema.define(version: 2020_05_26_091642) do
   end
 
   add_foreign_key "account_balances", "users"
+  add_foreign_key "account_extracts", "account_balances"
+  add_foreign_key "account_extracts", "users"
   add_foreign_key "accounts", "banks"
   add_foreign_key "accounts", "users"
   add_foreign_key "cities", "states"
+  add_foreign_key "incomes", "users"
   add_foreign_key "members", "cities"
   add_foreign_key "members", "states"
+  add_foreign_key "outgoings", "users"
   add_foreign_key "users", "members"
 end

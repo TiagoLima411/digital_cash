@@ -2,7 +2,7 @@ class CreateAccountExtracts < ActiveRecord::Migration[5.2]
   def change
     create_table :account_extracts do |t|
       t.references :user, foreign_key: true
-      t.references :account_banlance, foreign_key: true
+      t.references :account_balance, foreign_key: true
       t.integer :reference_id
       t.integer :value_cents
       t.integer :balance_cents
