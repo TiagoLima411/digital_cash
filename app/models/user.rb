@@ -5,10 +5,14 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable, :timeoutable
 
   belongs_to :member, optional: true
+  
   has_one :account
+  has_one :account_balance
 
   validates :username, uniqueness: true
   validates :username, presence: true, format: { with: /\A^[0-9a-zA-Z]*$\z/, message: "só pode conter letras e números."}
+
+  after_create :create_account_balance
 
   enum role: %i[root member api]
   accepts_nested_attributes_for :member
@@ -35,5 +39,11 @@ class User < ApplicationRecord
   end
 
   def will_save_change_to_email?; end
+
+  def create_account_balance
+    if self.member?
+      AccountBalance.generate(self)
+    end
+  end
 
 end

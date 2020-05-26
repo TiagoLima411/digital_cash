@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_26_010001) do
+ActiveRecord::Schema.define(version: 2020_05_26_091642) do
+
+  create_table "account_balances", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.integer "available_value_cents"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_account_balances_on_user_id"
+  end
 
   create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
@@ -25,7 +33,7 @@ ActiveRecord::Schema.define(version: 2020_05_26_010001) do
     t.index ["user_id"], name: "index_accounts_on_user_id"
   end
 
-  create_table "banks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
+  create_table "banks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "code"
     t.datetime "created_at", null: false
@@ -93,6 +101,7 @@ ActiveRecord::Schema.define(version: 2020_05_26_010001) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "account_balances", "users"
   add_foreign_key "accounts", "banks"
   add_foreign_key "accounts", "users"
   add_foreign_key "cities", "states"
