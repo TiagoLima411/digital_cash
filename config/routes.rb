@@ -36,5 +36,5 @@ Rails.application.routes.draw do
   #Outgoing
   resources :outgoings, only: [:new, :create] 
   
-  
+  resources :bank_transactions, only: [:new, :create]
 end

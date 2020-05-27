@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_26_094923) do
+ActiveRecord::Schema.define(version: 2020_05_27_204750) do
 
   create_table "account_balances", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
@@ -47,6 +47,19 @@ ActiveRecord::Schema.define(version: 2020_05_26_094923) do
     t.index ["user_id"], name: "index_accounts_on_user_id"
   end
 
+  create_table "bank_transactions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.integer "benefited_user_id"
+    t.integer "spread_fee_cents"
+    t.integer "net_value_cents"
+    t.integer "gross_value_cents"
+    t.string "description"
+    t.integer "status", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_bank_transactions_on_user_id"
+  end
+
   create_table "banks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name"
     t.string "code"
@@ -66,6 +79,7 @@ ActiveRecord::Schema.define(version: 2020_05_26_094923) do
   create_table "incomes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
     t.integer "intype"
+    t.integer "reference_id"
     t.integer "value_cents"
     t.string "description"
     t.datetime "created_at", null: false
@@ -97,14 +111,36 @@ ActiveRecord::Schema.define(version: 2020_05_26_094923) do
     t.index ["state_id"], name: "index_members_on_state_id"
   end
 
+  create_table "nobe_revenues", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "bank_transaction_id"
+    t.string "description"
+    t.integer "value_cents"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bank_transaction_id"], name: "index_nobe_revenues_on_bank_transaction_id"
+    t.index ["user_id"], name: "index_nobe_revenues_on_user_id"
+  end
+
   create_table "outgoings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
     t.integer "outtype"
+    t.integer "reference_id"
     t.integer "value_cents"
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_outgoings_on_user_id"
+  end
+
+  create_table "rate_settings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "day_of_week"
+    t.integer "rate_cents"
+    t.integer "alternative_rate_cents"
+    t.time "initial_time"
+    t.time "end_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "states", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -140,10 +176,13 @@ ActiveRecord::Schema.define(version: 2020_05_26_094923) do
   add_foreign_key "account_extracts", "users"
   add_foreign_key "accounts", "banks"
   add_foreign_key "accounts", "users"
+  add_foreign_key "bank_transactions", "users"
   add_foreign_key "cities", "states"
   add_foreign_key "incomes", "users"
   add_foreign_key "members", "cities"
   add_foreign_key "members", "states"
+  add_foreign_key "nobe_revenues", "bank_transactions"
+  add_foreign_key "nobe_revenues", "users"
   add_foreign_key "outgoings", "users"
   add_foreign_key "users", "members"
 end
