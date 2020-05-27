@@ -10,7 +10,7 @@ class IncomesController < ApplicationController
 
     respond_to do |format|
       if @income.save
-        format.html { redirect_to dashboard_path, notice: 'Depósito criado com sucesso.' }
+        format.html { redirect_to dashboard_path, notice: 'Depósito efetuado com sucesso.' }
         format.json { render :show, status: :created, location: @income }
       else
         format.html { render :new }
@@ -21,9 +21,9 @@ class IncomesController < ApplicationController
 
   private
     
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def income_params
-      params.require(:income).permit(:id, :user_id, :intype, :value_cents, :description)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def income_params
+    params.require(:income).permit(:id, :user_id, :intype, :value, :description)
+  end
 
 end

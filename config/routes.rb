@@ -32,5 +32,9 @@ Rails.application.routes.draw do
 
   #Incomes
   resources :incomes, only: [:new, :create]
+
+  #Outgoing
+  resources :outgoings, only: [:new, :create] 
+  
   
 end

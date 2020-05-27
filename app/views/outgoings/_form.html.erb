@@ -1,13 +1,13 @@
-<%= form_for(income, :html => {class: "page-body list", multipart: true}) do |f| %>
-  <% if income.errors.any? %>
+<%= form_for(outgoing, :html => {class: "page-body list", multipart: true}) do |f| %>
+  <% if outgoing.errors.any? %>
     <div class="row">
       <ul class="collection with-header animated fadeInUp">
-        <% if income.errors.count > 1 %>
-          <li class="collection-header"><h5><%= income.errors.count %> erros impediram que o registro fosse salvo:</h5></li>
+        <% if outgoing.errors.count > 1 %>
+          <li class="collection-header"><h5><%= outgoing.errors.count %> erros impediram que o registro fosse salvo:</h5></li>
         <% else %>
-          <li class="collection-header"><h5><%= income.errors.count %> erro impediu que o registro fosse salvo:</h5></li>
+          <li class="collection-header"><h5><%= outgoing.errors.count %> erro impediu que o registro fosse salvo:</h5></li>
         <% end %>
-        <% income.errors.full_messages.each do |message| %>
+        <% outgoing.errors.full_messages.each do |message| %>
           <li class="collection-item valign-wrapper"><i class="material-icons">error_outline</i>&nbsp;<span> <%= message %></span></li>
         <% end %>
       </ul>
@@ -22,7 +22,7 @@
     </div>
 
     <%= f.hidden_field :user_id, value: current_user.id %>
-    <%= f.hidden_field :intype, value: Income.intypes.keys[0] %>
+    <%= f.hidden_field :outtype, value: Outgoing.outtypes.keys[0] %>
 
     <div class="row">
       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-0">
