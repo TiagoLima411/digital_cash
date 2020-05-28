@@ -26,16 +26,22 @@ Rails.application.routes.draw do
   get 'get_cities_by_name', to: 'cities#get_by_name'
   get 'concat_cities', to: 'cities#concat'
   get 'list', to: 'cities#list'
-
+  
   #Accounts
   resources :accounts
   get 'get_account_from_ajax', to: 'accounts#get_account_from_ajax'
-
+  
   #Incomes
   resources :incomes, only: [:new, :create]
-
+  
   #Outgoing
   resources :outgoings, only: [:new, :create] 
   
   resources :bank_transactions, only: [:new, :create]
+
+  #SessionPayments
+  #resources :session_payments, only: [:payment_password]
+  get '/payment_password', to: 'session_payments#middleware_payment_password'
+  get '/verify_payment_password', to: 'session_payments#verify_payment_password'
+
 end

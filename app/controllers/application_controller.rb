@@ -54,6 +54,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def verify_payment_password!
+    if current_user.member?
+      redirect_to '/payment_password', notice: 'Insira sua senha de pagamento.'
+    end
+  end
+
   def json_pagination(collection)
     {
       current_page: collection.current_page,

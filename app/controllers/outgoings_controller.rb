@@ -1,4 +1,7 @@
 class OutgoingsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :verify_payment_password!, only: [:new]
+
   def new
     @outgoing = Outgoing.new
   end

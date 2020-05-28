@@ -47,4 +47,19 @@ class User < ApplicationRecord
     end
   end
 
+  def self.valid_payment_password?(cpf, payment_password)
+    response = false
+    user = User.joins(:member).find_by(members: {cpf: cpf})
+
+    begin
+      user_password = BCrypt::Password.new(user.payment_password)
+      response = user_password == payment_password unless user.nil? || user.payment_password.nil?
+    rescue BCrypt::Errors::InvalidHash
+      return nil
+    end
+
+    return nil if !response
+    return user if !user.nil? && user.member.cpf.eql?(cpf) && response
+  end
+
 end
