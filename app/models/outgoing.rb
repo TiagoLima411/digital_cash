@@ -8,12 +8,12 @@ class Outgoing < ApplicationRecord
   enum outtype: %i[with_draw transfer]
 
   def self.generate_debit(bank_transaction)
-    net_value = format_value_cents(bank_transaction.net_value_cents) 
+    net_value = format_value_cents(bank_transaction.gross_value_cents) 
 
     outgoing = Outgoing.new
     outgoing.user = bank_transaction.user
     outgoing.outtype = Outgoing.outtypes[:transfer]
-    outgoing.value_cents = bank_transaction.net_value_cents
+    outgoing.value_cents = bank_transaction.gross_value_cents
     outgoing.description = "Transferido o valor de R$#{net_value} para #{bank_transaction.benefited_user.member.name}"
     outgoing.reference_id = bank_transaction.id
     outgoing.save

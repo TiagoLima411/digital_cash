@@ -10,7 +10,7 @@ class BankTransactionsController < ApplicationController
 
     respond_to do |format|
       if @bank_transaction.save
-        format.html { redirect_to dashboard_path, notice: 'Depósito efetuado com sucesso.' }
+        format.html { redirect_to dashboard_path, notice: 'Transferência efetuada com sucesso.' }
         format.json { render :show, status: :created, location: @bank_transaction }
       else
         format.html { render :new }
@@ -23,7 +23,7 @@ class BankTransactionsController < ApplicationController
     
   # Never trust parameters from the scary internet, only allow the white list through.
   def bank_transaction_params
-    params.require(:bank_transaction).permit(:id, :user_id, :benefited_user_id, :spread_fee_cents, :net_value_cents, :gross_value_cents, :description, :status)
+    params.require(:bank_transaction).permit(:id, :user_id, :benefited_user_id, :net_value, :description)
   end
 
 end

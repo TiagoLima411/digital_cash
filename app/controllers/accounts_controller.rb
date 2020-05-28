@@ -79,6 +79,11 @@ class AccountsController < ApplicationController
     end
   end
 
+  def get_account_from_ajax
+    @accounts = Account.filter(Account.actives, params.slice(:bank_id, :kind, :agency, :account_number))
+    json_response(@accounts, :ok)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_account
