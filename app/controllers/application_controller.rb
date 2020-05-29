@@ -54,9 +54,23 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def verify_payment_password!
-    if current_user.member?
-      redirect_to '/payment_password', notice: 'Insira sua senha de pagamento.'
+  def check_credentials_outgoing(cpf = nil, payment_password = nil)
+    redirect_to "/outgoings/new?cpf=#{cpf}&payment_password=#{payment_password}"
+  end
+
+  def valid_payment_user(cpf = nil, payment_password = nil)
+    if cpf.nil? && payment_password.nil?
+      @payment_password = false
+      redirect_to payment_password_path, notice: 'Insira sua senha de pagamento.'
+    else
+      payment = User.valid_payment_password?(cpf, payment_password)
+      
+      if !payment.nil?
+        return true
+      else
+        @payment_password = false
+        return false
+      end 
     end
   end
 

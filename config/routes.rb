@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get 'account/register', to: 'members#register'
   get '/convite/:username', to: 'members#register'
   patch 'member_change_password', to: 'members#member_change_password'
+  post 'set_payment_password', to: 'members#set_payment_password'
   resources :members, except: [:index]
   
   # USERS
@@ -40,8 +41,6 @@ Rails.application.routes.draw do
   resources :bank_transactions, only: [:new, :create]
 
   #SessionPayments
-  #resources :session_payments, only: [:payment_password]
   get '/payment_password', to: 'session_payments#middleware_payment_password'
-  get '/verify_payment_password', to: 'session_payments#verify_payment_password'
 
 end

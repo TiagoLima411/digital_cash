@@ -1,5 +1,5 @@
 class MembersController < ApplicationController
-  skip_before_action :verify_authenticity_token, only: [:create, :member_change_password]
+  skip_before_action :verify_authenticity_token, only: [:create, :member_change_password, :set_payment_password]
   before_action :set_member, only: %i[update]
   before_action :authenticate_user!, except: %i[ register create site]
   layout :resolve_layout
@@ -87,6 +87,27 @@ class MembersController < ApplicationController
         format.html { render :edit }
       end
     end
+  end
+
+  def set_payment_password
+    
+    if params[:payment_password].present? && params[:payment_password_confirmation].present? && params[:payment_password].eql?(params[:payment_password_confirmation])
+
+      if current_user.update(payment_password: BCrypt::Password.create(params[:payment_password]))
+
+        #sign_in(current_user, :bypass => true)
+        flash[:success] = "Senha de pagamento criada com sucesso."
+        redirect_to account_edit_path
+
+      else
+
+        flash[:warning] = "Algo deu errado repita a operação!"
+        redirect_to account_edit_path
+        
+      end
+      
+    end
+
   end
   
   private

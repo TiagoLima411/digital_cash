@@ -1,9 +1,21 @@
 class OutgoingsController < ApplicationController
   before_action :authenticate_user!
-  before_action :verify_payment_password!, only: [:new]
 
   def new
     @outgoing = Outgoing.new
+    if is_defined_param?(:cpf) && is_defined_param?(:payment_password)
+      if valid_payment_user(params[:cpf], params[:payment_password])
+        @payment_password = true
+        respond_to do |format|
+          format.html { render :new } 
+        end
+      else
+        valid_payment_user
+      end
+    else
+      valid_payment_user 
+    end
+    
   end
 
   def create

@@ -11,16 +11,17 @@
       </div>
     </div>
   </div>
-
-  <div class="row">
-    <div class="col-12">
-      <div class="card">
-        <div class="card-content collapse show">
-          <div class="card-body">
-            <%= render 'form', outgoing: @outgoing %>
+  <% if @payment_password%>
+    <div class="row" id="outgoing_div">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-content collapse show">
+            <div class="card-body">      
+                <%= render 'form', outgoing: @outgoing %>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  <%end%>
 </div>
