@@ -1,4 +1,6 @@
 class AccountExtract < ApplicationRecord
+  include Filterable
+
   belongs_to :user
   belongs_to :account_balance
 
@@ -6,6 +8,8 @@ class AccountExtract < ApplicationRecord
   monetize :balance_cents
   
   enum type_register: %i[credit debit]
+
+  scope :user_extract, ->(user) { where(user_id: user.id) }
 
   def self.generate_credit(credit)
 

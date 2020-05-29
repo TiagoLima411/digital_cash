@@ -33,6 +33,9 @@ Rails.application.routes.draw do
   get 'get_account_from_ajax', to: 'accounts#get_account_from_ajax'
   get '/account/inactive', to: 'accounts#inactive'
   
+  #AccountExtracts
+  resources :account_extracts, only: [:index]
+  
   #Incomes
   resources :incomes, only: [:new, :create]
   
@@ -40,8 +43,9 @@ Rails.application.routes.draw do
   resources :outgoings, only: [:new, :create] 
   
   resources :bank_transactions, only: [:new, :create]
-
+  
   #SessionPayments (Middlewares)
   get '/outgoing_payment_password', to: 'session_payments#middleware_outgoing_payment_password'
   get '/bank_transaction_payment_password', to: 'session_payments#middleware_bank_transaction_payment_password'
+  
 end
