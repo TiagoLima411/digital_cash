@@ -3,6 +3,20 @@ class BankTransactionsController < ApplicationController
 
   def new
     @bank_transaction = BankTransaction.new
+    origin = @bank_transaction.class.name.downcase
+    if is_defined_param?(:cpf) && is_defined_param?(:payment_password)
+      if valid_payment_user(origin, params[:cpf], params[:payment_password])
+        @payment_password = true
+        respond_to do |format|
+          format.html { render :new } 
+        end
+      else
+        valid_payment_user(origin, nil, nil)
+      end
+    else
+      valid_payment_user(origin, nil, nil)
+    end
+
   end
 
   def create
