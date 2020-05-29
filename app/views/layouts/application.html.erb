@@ -52,13 +52,11 @@
         <ul class="nav navbar-nav mr-auto float-left">
           <li class="nav-item d-md-flex align-items-md-center d-none d-md-blockk">
             <a style="color: #d3d4d6;" class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu"></i></a>
-            <% unless current_user.member? %>
               <p class="m-0 w-100" style="color: #d3d4d6;">Bem-vindo à <b>Nobe! </b>Seu Link de indicação é
                 <b>
                   <a style="color: #29afa3;" target="_blank" href="https://portal.nobe.com.br/convite/<%=current_user.username%>">portal.nobe.com.br/convite/<%=current_user.username%></a>
                 </b>
               </p>
-            <% end %>
           </li>
         </ul>
         <ul class="nav navbar-nav float-right">
@@ -86,6 +84,11 @@
               <a href="/account/edit" class="dropdown-item" data-turbolinks="false">
                 <i class="ft-user"></i> Perfil
               </a>
+              <% if current_user.account.active %>
+                <a href="/account/inactive" class="dropdown-item" data-turbolinks="false">
+                  <i class="ft-x-square"></i> Desativar conta
+                </a>
+              <% end %>
               <div class="dropdown-divider"></div>
               <a href="/" class="dropdown-item" data-toggle="modal" data-target="#modalExit">
                 <i class="ft-power"></i> Sair

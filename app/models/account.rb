@@ -11,4 +11,8 @@ class Account < ApplicationRecord
   scope :kind, ->(type) { where(account_type: type) }
   scope :agency, ->(agency) { where(agency_number: agency) }
   scope :account_number, -> (account_number) { where(account_number: account_number) }
+
+  def inactive
+    self.update(active: false)
+  end
 end

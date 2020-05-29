@@ -2,10 +2,17 @@ class Outgoing < ApplicationRecord
   belongs_to :user
 
   after_create :update_account_balance, :generate_history
+  validate :check_balance, on: :create
   
   monetize :value_cents
   
   enum outtype: %i[with_draw transfer]
+
+  def check_balance
+    if self.user.account_balance.available_value_cents < self.value_cents 
+			self.errors.add(:base, "Saldo insuficiente para completar a transação!" )
+		end
+  end
 
   def self.generate_debit(bank_transaction)
     net_value = format_value_cents(bank_transaction.gross_value_cents) 

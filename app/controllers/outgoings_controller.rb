@@ -27,7 +27,7 @@ class OutgoingsController < ApplicationController
         format.html { redirect_to dashboard_path, notice: 'Depósito efetuado com sucesso.' }
         format.json { render :show, status: :created, location: @outgoing }
       else
-        format.html { render :new }
+        format.html { redirect_to new_income_path, notice: 'Saldo insuficienteS.' }
         format.json { render json: @outgoing.errors, status: :unprocessable_entity }
       end
     end

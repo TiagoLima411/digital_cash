@@ -31,6 +31,7 @@ Rails.application.routes.draw do
   #Accounts
   resources :accounts
   get 'get_account_from_ajax', to: 'accounts#get_account_from_ajax'
+  get '/account/inactive', to: 'accounts#inactive'
   
   #Incomes
   resources :incomes, only: [:new, :create]

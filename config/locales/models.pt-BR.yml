@@ -4,6 +4,8 @@ pt-BR:
     models:
       user: Usuário
       account: Conta
+      income: Entrada
+      outgoing: Saída
     attributes:
       user:
         name: Nome
@@ -61,3 +63,15 @@ pt-BR:
         account_type:
           cc: Conta Corrente
           cp: Conta Poupança
+      income:
+        value: Valor
+        description: Descrição
+        intype:
+          deposit: Depósito
+          transfer: Transferência
+      outgoing:
+        value: Valor
+        description: Descrição
+        outtype:
+          with_draw: Saque
+          transfer: Transferência
