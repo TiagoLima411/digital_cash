@@ -94,10 +94,12 @@
               <a href="/account/edit" class="dropdown-item" data-turbolinks="false">
                 <i class="ft-user"></i> Perfil
               </a>
-              <% if current_user.account.active %>
-                <a href="/account/inactive" class="dropdown-item" data-turbolinks="false">
-                  <i class="ft-x-square"></i> Desativar conta
-                </a>
+              <% unless current_user.account.nil? %>
+                <% if current_user.account.active %>
+                  <a href="/account/inactive" class="dropdown-item" data-turbolinks="false">
+                    <i class="ft-x-square"></i> Desativar conta
+                  </a>
+                <% end %>
               <% end %>
               <div class="dropdown-divider"></div>
               <a href="/" class="dropdown-item" data-toggle="modal" data-target="#modalExit">
