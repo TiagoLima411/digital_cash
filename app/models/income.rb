@@ -8,6 +8,10 @@ class Income < ApplicationRecord
   
   enum intype: %i[deposit transfer]
 
+  scope :incomes_in_month, ->(date) {
+    where(created_at: [date.beginning_of_month.beginning_of_day..date.end_of_month.end_of_day])
+  }
+
   def self.generate_credit(bank_transaction)
     net_value = format_value_cents(bank_transaction.net_value_cents) 
 

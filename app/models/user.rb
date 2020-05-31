@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_one :account
   has_one :account_balance
   has_many :incomes
+  has_many :outgoings
 
   validates :username, uniqueness: true
   validates :username, presence: true, format: { with: /\A^[0-9a-zA-Z]*$\z/, message: "só pode conter letras e números."}

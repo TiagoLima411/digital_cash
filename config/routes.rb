@@ -9,7 +9,8 @@ Rails.application.routes.draw do
   
   # Dashboard
   get 'dashboard', to: 'dashboard#index'
-  
+  get 'get_volume_traded_by_month', to: 'dashboard#get_volume_traded_by_month'
+
   # MEMBERS
   get 'account/edit', to: 'members#edit'
   put 'account/edit_password', to: 'members#edit_password'

@@ -8,6 +8,10 @@ class Outgoing < ApplicationRecord
   
   enum outtype: %i[with_draw transfer]
 
+  scope :outgoings_in_month, ->(date) {
+    where(created_at: [date.beginning_of_month.beginning_of_day..date.end_of_month.end_of_day])
+  }
+
   def check_balance
     if self.user.account_balance.available_value_cents < self.value_cents 
 			self.errors.add(:base, "Saldo insuficiente para completar a transação!" )
