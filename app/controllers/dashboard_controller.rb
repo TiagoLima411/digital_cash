@@ -8,8 +8,10 @@ class DashboardController < ApplicationController
     @amount_outgoing_value_cents = current_user.outgoings.sum('value_cents')
     
     @amoun_volume_traded = @amount_income_value_cents + @amount_outgoing_value_cents
-    
-    @percent_incomes =  (@amount_income_value_cents * 100) / @amoun_volume_traded
+    @amoun_volume = @amoun_volume_traded
+    @amoun_volume_traded = 1 if @amoun_volume_traded.eql?(0)
+
+    @percent_incomes =  (@amount_income_value_cents * 100) / @amoun_volume_traded 
     @percent_outgoings = (@amount_outgoing_value_cents * 100) / @amoun_volume_traded
 
   end
