@@ -6,6 +6,7 @@ pt-BR:
       account: Conta
       income: Entrada
       outgoing: Saída
+      account_extract: Extrato da conta
     attributes:
       user:
         name: Nome
@@ -75,3 +76,7 @@ pt-BR:
         outtype:
           with_draw: Saque
           transfer: Transferência
+      account_extract:
+          type_register:
+            credit: Crédito 
+            debit: Débito

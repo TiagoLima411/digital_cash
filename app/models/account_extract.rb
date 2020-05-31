@@ -26,10 +26,11 @@ class AccountExtract < ApplicationRecord
   end
 
   def self.generate_debit(debit)
+    balance = User.find(debit.user.id).account_balance.available_value_cents
 
     extract = AccountExtract.new
     extract.account_balance = debit.user.account_balance
-    extract.balance_cents = debit.user.account_balance.available_value_cents
+    extract.balance_cents = balance
     extract.description = debit.description
     extract.type_register = AccountExtract.type_registers[:debit]
     extract.user = debit.user
