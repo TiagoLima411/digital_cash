@@ -10,6 +10,9 @@ class AccountExtract < ApplicationRecord
   enum type_register: %i[credit debit]
 
   scope :user_extract, ->(user) { where(user_id: user.id) }
+  scope :type_register, ->(type_register) { where(type_register: type_register) }
+  scope :date_filter_inicial, ->(date) { where(created_at: [date.to_date.beginning_of_day..Date::Infinity.new]) }
+  scope :date_filter_final, ->(date) { where(created_at: [Time.at(0)..(date.to_s.to_date.end_of_day)]) }
 
   def self.generate_credit(credit)
 
