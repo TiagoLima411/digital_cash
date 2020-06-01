@@ -32,47 +32,49 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-sm-12">
-          <div class="card height-300">
-            <div class="card-header">
-              <h4 class="card-title">Senha de Pagamento</h4>
-            </div>
-            <div class="card-content collapse show">
-              <div class="card-body">
-                <div class="row text-center">
-                  <div class="col-md-12 col-sm-12">
-                    
-                    <%= form_for(@member, url: '/set_payment_password', method: :post, authenticity_token: true) do |f| %>
-                      <div class="row">
+        <% unless current_user.account.nil? %>
+          <div class="col-md-6 col-sm-12">
+            <div class="card height-300">
+              <div class="card-header">
+                <h4 class="card-title">Senha de Pagamento</h4>
+              </div>
+              <div class="card-content collapse show">
+                <div class="card-body">
+                  <div class="row text-center">
+                    <div class="col-md-12 col-sm-12">
+                      
+                      <%= form_for(@member, url: '/set_payment_password', method: :post, authenticity_token: true) do |f| %>
+                        <div class="row">
 
-                        <div class="col-md-6 col-sm-12 mb-2">
-                          <fieldset class="form-group">
-                            <label for="" class="label-register active">Senha de pagamento:</label>
-                            <%= f.password_field :payment_password, name:"payment_password", id:"payment_password", class:"form-control", placeholder: "Insira a nova senha", required:"required", minlength: 6 %>
-                          </fieldset>
+                          <div class="col-md-6 col-sm-12 mb-2">
+                            <fieldset class="form-group">
+                              <label for="" class="label-register active">Senha de pagamento:</label>
+                              <%= f.password_field :payment_password, name:"payment_password", id:"payment_password", class:"form-control", placeholder: "Insira a nova senha", required:"required", minlength: 6 %>
+                            </fieldset>
+                          </div>
+
+                          <div class="col-md-6 col-sm-12 mb-2">
+                            <fieldset class="form-group">
+                              <label for="" class="label-register active">Repita senha de pagamento:</label>
+                              <%= f.password_field :payment_password_confirmation, name:"payment_password_confirmation", id:"payment_password_confirmation", onkeyup:"validationFunction()", class:"form-control", placeholder: "Repita a nova senha", required:"required", minlength: 6 %>
+                            </fieldset>
+                          </div>
+
+                          <div class="col-12 d-flex justify-content-end">
+                            <button type="submit" class="btn btn-outline-primary" id="submit">
+                              <i class="ft-check"></i>&nbsp;&nbsp;Salvar
+                            </button>
+                          </div>
                         </div>
+                      <% end %>
 
-                        <div class="col-md-6 col-sm-12 mb-2">
-                          <fieldset class="form-group">
-                            <label for="" class="label-register active">Repita senha de pagamento:</label>
-                            <%= f.password_field :payment_password_confirmation, name:"payment_password_confirmation", id:"payment_password_confirmation", onkeyup:"validationFunction()", class:"form-control", placeholder: "Repita a nova senha", required:"required", minlength: 6 %>
-                          </fieldset>
-                        </div>
-
-                        <div class="col-12 d-flex justify-content-end">
-                          <button type="submit" class="btn btn-outline-primary" id="submit">
-                            <i class="ft-check"></i>&nbsp;&nbsp;Salvar
-                          </button>
-                        </div>
-                      </div>
-                    <% end %>
-
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        <%end%>
       </div>
 
       <%= form_for(@member, html: {id: "form_show_member_data", class: "page-body "}) do |f| %>
