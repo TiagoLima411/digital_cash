@@ -364,6 +364,8 @@ GEM
       tilt (~> 2.0)
     slack-notifier (2.3.2)
     spring (2.1.0)
+    spring-commands-rspec (1.0.4)
+      spring (>= 0.9.1)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
       spring (>= 1.2, < 3.0)
@@ -425,7 +427,7 @@ DEPENDENCIES
   bootsnap (>= 1.1.0)
   builder (~> 3.2, >= 3.2.2)
   byebug
-  capybara (~> 2.15)
+  capybara
   chromedriver-helper
   cocoon
   coffee-rails (~> 4.2)
@@ -468,7 +470,7 @@ DEPENDENCIES
   rails (~> 5.2.3)
   ransack
   rest-client
-  rspec-rails
+  rspec-rails (~> 3.6)
   sass-rails (~> 5.0)
   selenium-webdriver
   shoulda-matchers
@@ -476,6 +478,7 @@ DEPENDENCIES
   sinatra
   slack-notifier
   spring
+  spring-commands-rspec
   spring-watcher-listen (~> 2.0.0)
   toastr-rails
   turbolinks (~> 5)
