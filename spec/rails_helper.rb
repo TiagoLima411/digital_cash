@@ -26,9 +26,16 @@ require 'support/shoulda'
 
 # Checks for pending migrations and applies them before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
+
+I18n.locale = :'pt-BR'
 ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
+  
+  #Devise
+  config.include Devise::Test::ControllerHelpers, :type => :controller
+  config.include Warden::Test::Helpers
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_path = "#{::Rails.root}/spec/fixtures"
 
