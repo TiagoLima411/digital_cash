@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  
+  mount ExceptionLogger::Engine => "/exception_logger"
   # Devise
   devise_for :users, skip: %i[registrations], controllers: { sessions: 'sessions' }
   devise_scope :user do

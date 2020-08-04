@@ -93,7 +93,7 @@ class MembersController < ApplicationController
     
     if params[:payment_password].present? && params[:payment_password_confirmation].present? && params[:payment_password].eql?(params[:payment_password_confirmation])
 
-      if current_user.update(payment_password: BCrypt::Password.create(params[:payment_password]))
+      if current_user.set_payment_password(params[:payment_password])
 
         #sign_in(current_user, :bypass => true)
         flash[:success] = "Senha de pagamento criada com sucesso."

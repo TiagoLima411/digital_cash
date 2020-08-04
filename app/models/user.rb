@@ -12,7 +12,7 @@ class User < ApplicationRecord
   has_many :outgoings
 
   validates :username, uniqueness: true
-  validates :username, presence: true#, format: { with: /\A^[0-9a-zA-Z]*$\z/, message: "só pode conter letras e números."}
+  validates :username, presence: true, format: { with: /\A^[0-9a-zA-Z]*$\z/, message: "só pode conter letras e números."}
 
   after_create :create_account_balance
 
@@ -46,6 +46,10 @@ class User < ApplicationRecord
     if self.member?
       AccountBalance.generate(self)
     end
+  end
+
+  def set_payment_password(payment_password)
+    self.update(payment_password: BCrypt::Password.create(payment_password))
   end
 
   def self.valid_payment_password?(cpf, payment_password)
