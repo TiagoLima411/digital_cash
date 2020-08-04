@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ryancheung/exception_logger.git
-  revision: 47b0053cc709a02ea0645b269056586c8766fff0
+  revision: fbd23a3335c1b985475e61921227d2beb699d940
   specs:
     exception_logger (0.2.0)
       rails (>= 4.0.0)
@@ -137,11 +137,11 @@ GEM
       actionmailer (>= 4.0, < 6)
       activesupport (>= 4.0, < 6)
     execjs (2.7.0)
-    factory_bot (5.0.2)
-      activesupport (>= 4.2.0)
-    factory_bot_rails (5.0.2)
-      factory_bot (~> 5.0.2)
-      railties (>= 4.2.0)
+    factory_bot (4.11.1)
+      activesupport (>= 3.0.0)
+    factory_bot_rails (4.11.1)
+      factory_bot (~> 4.11.1)
+      railties (>= 3.0.0)
     faker (1.9.6)
       i18n (>= 0.7)
     faraday (0.15.4)
@@ -351,8 +351,8 @@ GEM
     selenium-webdriver (3.142.3)
       childprocess (>= 0.5, < 2.0)
       rubyzip (~> 1.2, >= 1.2.2)
-    shoulda-matchers (4.1.1)
-      activesupport (>= 4.2.0)
+    shoulda-matchers (3.1.3)
+      activesupport (>= 4.0.0)
     simple_token_authentication (1.15.1)
       actionmailer (>= 3.2.6, < 6)
       actionpack (>= 3.2.6, < 6)
@@ -442,7 +442,7 @@ DEPENDENCIES
   droplet_kit
   exception_logger!
   exception_notification
-  factory_bot_rails
+  factory_bot_rails (~> 4.0)
   faker
   flipclockjs-rails (~> 0.7.7)
   fun_sftp
@@ -473,7 +473,7 @@ DEPENDENCIES
   rspec-rails (~> 3.6)
   sass-rails (~> 5.0)
   selenium-webdriver
-  shoulda-matchers
+  shoulda-matchers (~> 3.1)
   simple_token_authentication (~> 1.0)
   sinatra
   slack-notifier

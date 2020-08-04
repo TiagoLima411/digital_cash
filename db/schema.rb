@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_28_173440) do
+ActiveRecord::Schema.define(version: 2020_06_13_224923) do
 
   create_table "account_balances", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
@@ -86,6 +86,17 @@ ActiveRecord::Schema.define(version: 2020_05_28_173440) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_incomes_on_user_id"
+  end
+
+  create_table "logged_exceptions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "exception_class"
+    t.string "controller_name"
+    t.string "action_name"
+    t.text "message"
+    t.text "backtrace"
+    t.text "environment"
+    t.text "request"
+    t.datetime "created_at"
   end
 
   create_table "members", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC", force: :cascade do |t|
