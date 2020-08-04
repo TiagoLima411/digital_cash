@@ -9,6 +9,7 @@ require 'rspec/rails'
 require 'support/factory_bot'
 require 'support/database_cleaner'
 require 'support/shoulda'
+require 'capybara/rspec'
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
@@ -32,6 +33,18 @@ ActiveRecord::Migration.maintain_test_schema!
 
 RSpec.configure do |config|
   
+  # Shoulda Matchers
+  Shoulda::Matchers.configure do |config|
+    config.integrate do |with|
+      # Choose a test framework:
+      with.test_framework :rspec
+      with.library :rails
+    end
+  end
+  
+  #FactoryBot
+  config.include FactoryBot::Syntax::Methods
+
   #Devise
   config.include Devise::Test::ControllerHelpers, :type => :controller
   config.include Warden::Test::Helpers
