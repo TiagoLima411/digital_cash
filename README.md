@@ -1,4 +1,4 @@
-# Onpax
+# Digital Cash
 
 Onpax is awesome
 
