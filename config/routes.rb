@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   devise_scope :user do
     root to: 'dashboard#index'
   end
-  
+
   # Dashboard
   get 'dashboard', to: 'dashboard#index'
   get 'get_volume_traded_by_month', to: 'dashboard#get_volume_traded_by_month'
@@ -19,39 +19,42 @@ Rails.application.routes.draw do
   patch 'member_change_password', to: 'members#member_change_password'
   post 'set_payment_password', to: 'members#set_payment_password'
   resources :members, except: [:index]
-  
+
   # USERS
   resources :users, only: [:index, :show, :edit, :update]
-  
+
   # Cities
   get 'get_cities', to: 'cities#get_cities_by_state'
   get 'get_cities_by_name', to: 'cities#get_by_name'
   get 'concat_cities', to: 'cities#concat'
   get 'list', to: 'cities#list'
-  
-  #Accounts
+
+  # Accounts
   resources :accounts
   get 'get_account_from_ajax', to: 'accounts#get_account_from_ajax'
   get '/account/inactive', to: 'accounts#inactive'
-  
-  #AccountExtracts
+
+  # AccountExtracts
   resources :account_extracts, only: [:index]
-  
-  #Incomes
+
+  # Incomes
   resources :incomes, only: [:new, :create]
-  
-  #Outgoing
+
+  # Outgoing
   resources :outgoings, only: [:new, :create] 
-  
+
   resources :bank_transactions, only: [:new, :create]
-  
-  #SessionPayments (Middlewares)
+
+  # SessionPayments (Middlewares)
   get '/outgoing_payment_password', to: 'session_payments#middleware_outgoing_payment_password'
   get '/bank_transaction_payment_password', to: 'session_payments#middleware_bank_transaction_payment_password'
-  
+
   namespace :api, defaults: {format: :json} do
-    #CoinGueck paths
+    # CoinGueck paths
     get 'coins/list', to: 'coingecko#index'
+
+    # Utils
+    get 'persist_coins_list', to: 'utils#persist_coins_list'
   end
-  
+
 end
