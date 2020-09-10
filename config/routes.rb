@@ -55,6 +55,7 @@ Rails.application.routes.draw do
 
     # Utils
     get 'persist_coins_list', to: 'utils#persist_coins_list'
+    get 'persist_vs_currency', to: 'utils#persist_vs_currency'
   end
 
 end

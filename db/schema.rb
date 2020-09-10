@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_10_133623) do
+ActiveRecord::Schema.define(version: 2020_09_10_152131) do
 
   create_table "account_balances", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
@@ -79,6 +79,13 @@ ActiveRecord::Schema.define(version: 2020_09_10_133623) do
 
   create_table "crypto_currencies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "coin_id"
+    t.string "symbol"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "currencies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "symbol"
     t.string "name"
     t.datetime "created_at", null: false
