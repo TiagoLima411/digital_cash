@@ -120,6 +120,7 @@ gem 'toastr-rails'
 
 # Makes http fun! Also, makes consuming restful web services dead easy.
 gem 'httparty', '~> 0.13.7'
+gem 'faraday'
 
 group :development, :test, :homologation do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

@@ -1,17 +1,21 @@
 class ApplicationController < ActionController::Base
   include Pundit
-  protect_from_forgery with: :exception
+
+  include ExceptionLogger::ExceptionLoggable # loades the module
+  unless Rails.env.development?
+    rescue_from Exception do |e|
+      handle_exception(e)
+    end
+  end
+
+  protect_from_forgery with: :null_session
+
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+  before_action :authenticate_user!
   before_action :prepare_exception_notifier
 
   include Response
-
-  unless Rails.env.development?
-    include ExceptionLogger::ExceptionLoggable # loades the module
-    rescue_from Exception do |e|
-      log_exception_handler(e)# tells rails to forward the 'Exception' (you can change the type) to the handler of the module
-    end
-  end
 
   def authorize_request
     if request.format == "application/json"

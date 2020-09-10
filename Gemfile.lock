@@ -444,6 +444,7 @@ DEPENDENCIES
   exception_notification
   factory_bot_rails (~> 4.0)
   faker
+  faraday
   flipclockjs-rails (~> 0.7.7)
   fun_sftp
   global
