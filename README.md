@@ -1,4 +1,4 @@
-# Digital Cash
+'# Digital Cash
 
 Simple application for transferring values between application users
 
@@ -11,7 +11,7 @@ After instalation run 'rvm install ruby-2.6.5'.
 [MySql](https://dev.mysql.com/doc/refman/5.7/en/installing.html).
 Make sure the service is running. And that the username and password is the same as that configured in the database.yml file.
 
-Clone repository `git clone git@github.com:TiagoLima411/digital_cash.git`
+Clone repository `git clone git@github.com:TiagoLima411/digital_cash.git`.
 Enter the `digital_cash` folder.
 
 ### Set up Digital Cash app
@@ -22,6 +22,7 @@ First, install the gems required by the application:
     bundle install
     
 Next, execute the database commands:
+
     rails db:create
     rails db:migrate
 
@@ -35,5 +36,6 @@ You can find your app now by pointing your browser to http://localhost:3000.
 
 ## More information
 
-This application is not yet in a production environment, any contribution to the project is welcome.
-Any questions send email to `tiagolima.0411@gmail.com`
+This project is not yet in the production environment, any contribution or constructive criticism is welcome.
+Any questions send email to `tiagolima.0411@gmail.com` or create issue.
+Success to all.
