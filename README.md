@@ -1,4 +1,4 @@
-'# Digital Cash
+# Digital Cash
 
 Simple application for transferring values between application users
 
