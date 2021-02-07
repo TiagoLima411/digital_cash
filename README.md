@@ -36,6 +36,15 @@ You can find your app now by pointing your browser to http://localhost:3000.
 
 ## More information
 
+To set environment variables, use the command below:
+
+    EDITOR=nano rails credentials:edit
+
+To check your keys run the commands below:
+    
+    rails c
+    Rails.application.credentials[Rails.env.to_sym][:you_key]
+
 This project is not yet in the production environment, any contribution or constructive criticism is welcome.
 Any questions send email to `tiagolima.0411@gmail.com` or create issue.
 Success to all.
