@@ -1,13 +1,12 @@
 require 'rails_helper'
-#require 'rspec/rails'
+# require 'rspec/rails'
 
-RSpec.feature "Register User", type: :feature do
-
-  scenario 'Verifica Formulário de Cadastro' do
+RSpec.feature 'Register User', type: :feature do
+  scenario 'Check Registration Form' do
     visit(account_register_path)
-    
-    #print page.html
-    #save_and_open_page
+
+    # print page.html
+    # save_and_open_page
 
     expect(page).to have_content('Crie seu Acesso')
     expect(page).to have_selector("input[type=text][name='member[user_attributes][username]']")
@@ -30,9 +29,9 @@ RSpec.feature "Register User", type: :feature do
     expect(page).to have_selector("input[type=submit][value='Criar Conta']")
   end
 
-  scenario "Verfica Cadastro de Usuário" do
+  scenario 'Verify User Registration' do
     visit(account_register_path)
-    
+
     password = Faker::Internet.password
 
     fill_in('member[user_attributes][username]', with: Faker::Internet.username.gsub(/[^0-9A-Za-z]/, ''))
@@ -56,7 +55,7 @@ RSpec.feature "Register User", type: :feature do
     expect(page).to have_content('Bem-vindo')
   end
 
-  scenario "Verifica Erro no cadastro" do
+  scenario 'Checks Error in registration' do
     visit(account_register_path)
     click_on('Criar Conta')
     expect(page).to have_content('Username não pode ficar em branco')

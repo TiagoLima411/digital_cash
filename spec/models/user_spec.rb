@@ -2,8 +2,6 @@ require 'rails_helper'
 #require 'rspec/rails'
 
 RSpec.describe User, type: :model do
-  
-  
   context 'Validates' do
     it 'user must be valid' do
       user = create(:user)
@@ -32,7 +30,7 @@ RSpec.describe User, type: :model do
       result = User.valid_payment_password?(member.cpf, password)
       expect(result).to be_kind_of(User)
     end
-    
+
     it 'user should create account balance' do
       member = create(:member)
       expect(member.user.account_balance).to be_kind_of(AccountBalance)
@@ -46,8 +44,4 @@ RSpec.describe User, type: :model do
       expect(result).to be_nil
     end
   end
-
-
-
-
 end
