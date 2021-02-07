@@ -18,7 +18,8 @@ default: &default
 
 development:
   <<: *default
-  database: nobe_development
+  host: 127.0.0.1
+  database: digital_cash_development
   variables:
       sql_mode: TRADITIONAL
 
@@ -27,7 +28,8 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: nobe_test
+  host: 127.0.0.1
+  database: digital_cash_test
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -51,7 +53,7 @@ test:
 
 homologation:
   <<: *default
-  database: nobe_homologation #onpax_licenciado_production
+  database: digital_cash_homologation #onpax_licenciado_production
   username: root
   password: #password
   variables:
