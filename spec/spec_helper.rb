@@ -20,6 +20,11 @@ RSpec.configure do |config|
   config.before(:suite) do
     FactoryBot.lint
   end
+
+  VCR.configure do |config|
+    config.cassette_library_dir = "spec/fixtures/vcr_cassettes"
+    config.hook_into :webmock
+  end
   
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest

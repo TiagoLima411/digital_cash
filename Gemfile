@@ -139,6 +139,8 @@ group :development, :test, :homologation do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'spring-commands-rspec'
+  gem 'webmock'
+  gem 'vcr'
 end
 
 group :development, :homologation do

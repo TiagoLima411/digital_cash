@@ -9,17 +9,17 @@ RSpec.describe 'Pagseguro', type: :request do
       @token            = Rails.application.credentials[Rails.env.to_sym][:pag_seguro_test_token]
       @email            = Rails.application.credentials[Rails.env.to_sym][:email]
 
-      @session_id       = create_session
-      @payment_methods  = get_payment_methods(@session_id)
-      @card_brand       = get_card_brand(@session_id)
-      @card_token       = get_card_token(@session_id, @card_brand['bin']['brand']['name'])
-      @installments     = get_installment_options(@session_id, @card_brand['bin']['brand']['name'])
+      @session          = create_session
+      @payment_methods  = get_payment_methods(@session['session']['id'])
+      @card_brand       = get_card_brand(@session['session']['id'])
+      @card_token       = get_card_token(@session['session']['id'], @card_brand['bin']['brand']['name'])
+      @installments     = get_installment_options(@session['session']['id'], @card_brand['bin']['brand']['name'])
       @transaction      = send_card_transaction(@card_token)
     end
 
     context 'payment api' do
-    it 'responds with session id present' do
-        expect(@session_id.present?).to eq(true)
+      it 'responds with session id present' do
+        expect(@session['session']['id'].present?).to eq(true)
       end
 
       it 'check payment methods' do
@@ -54,9 +54,10 @@ RSpec.describe 'Pagseguro', type: :request do
     puts '    Sending request to Pagseguro to create a SESSION, wait a moment ...'
     puts "    Request => #{@url_base_ws}/sessions"
     puts ''
-    response = HTTParty.post("#{@url_base_ws}/sessions?appId=#{app_id}&appKey=#{app_key}", headers: headers)
-    hash = Hash.from_xml(response.parsed_response.gsub("\n", ''))
-    hash['session']['id']
+    VCR.use_cassette('pagseguro/session') do
+      response = HTTParty.post("#{@url_base_ws}/sessions?appId=#{app_id}&appKey=#{app_key}", headers: headers)
+      Hash.from_xml(response.parsed_response.gsub("\n", ''))
+    end
   end
 
   # Second step Get Payments Methods
@@ -65,8 +66,10 @@ RSpec.describe 'Pagseguro', type: :request do
     puts '    Sending request to Pagseguro to obtain PAYMENT METHODS, wait a moment ...'
     puts "    Request => #{@url_base_ws}/payment-methods"
     puts ''
-    response = HTTParty.get("#{@url_base_ws}/payment-methods?amount=10.00&sessionId=#{session_id}", headers: headers)
-    JSON.parse(response)
+    VCR.use_cassette('pagseguro/payment_methods') do
+      response = HTTParty.get("#{@url_base_ws}/payment-methods?amount=10.00&sessionId=#{session_id}", headers: headers)
+      JSON.parse(response)
+    end
   end
 
   # Third step get card brand
@@ -75,9 +78,11 @@ RSpec.describe 'Pagseguro', type: :request do
     puts '    Sending request to get CARD DATA, wait a moment ...'
     puts "    Request => #{@url_base_helpers}/df-fe/mvc/creditcard/v1/getBin"
     puts ''
-    response = HTTParty.get("#{@url_base_helpers}/df-fe/mvc/creditcard/v1/getBin?tk=#{session_id}&creditCard=#{first_6_digits}")
-    body = response.body
-    JSON.parse(body)
+    VCR.use_cassette('pagseguro/card_info') do
+      response = HTTParty.get("#{@url_base_helpers}/df-fe/mvc/creditcard/v1/getBin?tk=#{session_id}&creditCard=#{first_6_digits}")
+      body = response.body
+      JSON.parse(body)
+    end
   end
 
   # Fourth step get card token
@@ -95,13 +100,15 @@ RSpec.describe 'Pagseguro', type: :request do
     puts '    Sending request to get CARD TOKEN, wait a moment ...'
     puts "    Request => #{@url_base_helpers}/v2/cards"
     puts ''
-    response = HTTParty.post("#{@url_base_helpers}/v2/cards?email=#{@email}&token=#{@token}", body: body, headers: headers)
-    return unless response.headers['content-type'] == 'application/json'
+    VCR.use_cassette('pagseguro/card_token') do
+      response = HTTParty.post("#{@url_base_helpers}/v2/cards?email=#{@email}&token=#{@token}", body: body, headers: headers)
+      return unless response.headers['content-type'] == 'application/json'
 
-    parsed_hash = JSON.parse(response.body)
-    return unless response.code == 200 && parsed_hash.key?('token')
+      parsed_hash = JSON.parse(response.body)
+      return unless response.code == 200 && parsed_hash.key?('token')
 
-    parsed_hash['token']
+      parsed_hash['token']
+    end
   end
 
   # Fifth step get installment options
@@ -114,22 +121,26 @@ RSpec.describe 'Pagseguro', type: :request do
     puts '    Sending request to get CARD INSTALLMENTS, wait a moment ...'
     puts "    Request => #{@url_base}/checkout/v2/installments.json"
     puts ''
-    response = HTTParty.get("#{@url_base}/checkout/v2/installments.json", query: query, verify: false)
-    JSON.parse(response.body)
+    VCR.use_cassette('pagseguro/installments') do
+      response = HTTParty.get("#{@url_base}/checkout/v2/installments.json", query: query, verify: false)
+      JSON.parse(response.body)
+    end
   end
 
   # Sixth step generate transaction
   def send_card_transaction(card_token)
     headers = { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
-    body = body_transaction(card_token)
+    body = body_transaction_mock(card_token)
     puts '    Sending request to generate TRANSACTION, wait a moment ...'
     puts "    Request => #{@url_base_ws}/transactions"
     puts ''
-    response = HTTParty.post("#{@url_base_ws}/transactions/", body: body, headers: headers)
-    Hash.from_xml(response.body)
+    VCR.use_cassette('pagseguro/transaction') do
+      response = HTTParty.post("#{@url_base_ws}/transactions/", body: body, headers: headers)
+      Hash.from_xml(response.body)
+    end
   end
 
-  def body_transaction(card_token)
+  def body_transaction_mock(card_token)
     {
       'email': @email,
       'token': @token,

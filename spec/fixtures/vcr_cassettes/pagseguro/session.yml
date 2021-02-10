@@ -1,0 +1,43 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://ws.sandbox.pagseguro.uol.com.br/sessions?appId=app2124123511&appKey=D513C68C1B1BF76224C2AF966BA27665
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Accept:
+      - application/vnd.pagseguro.com.br.v3+xml
+      Content-Type:
+      - application/x-www-form-urlencoded
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/vnd.pagseguro.com.br.v3+xml
+      Content-Length:
+      - '115'
+      Connection:
+      - keep-alive
+      Date:
+      - Wed, 10 Feb 2021 18:57:40 GMT
+      Server:
+      - Apache-Coyote/1.1
+      Vary:
+      - User-Agent
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 d82cf532ed9608d406fad9411438b499.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - GIG51-C1
+      X-Amz-Cf-Id:
+      - _gH-mwQEy7T8lhaxKKeDx6-70jYUhMzwuIrMamzAmE2oofppCUrn1g==
+    body:
+      encoding: UTF-8
+      string: <?xml version="1.0" encoding="UTF-8" standalone="yes"?><session><id>bd715027ce3b4ac68de2c6e731fe6278</id></session>
+  recorded_at: Wed, 10 Feb 2021 18:57:40 GMT
+recorded_with: VCR 6.0.0
