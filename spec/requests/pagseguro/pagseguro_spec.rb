@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Pagseguro', type: :request do
+RSpec.describe 'Pagseguro API', type: :request do
   describe 'Sandbox Pagseguro integration' do
     before(:context) do
       @url_base         = 'https://sandbox.pagseguro.uol.com.br'
@@ -17,29 +17,120 @@ RSpec.describe 'Pagseguro', type: :request do
       @transaction      = send_card_transaction(@card_token)
     end
 
-    context 'payment api' do
+    context 'session' do
       it 'responds with session id present' do
         expect(@session['session']['id'].present?).to eq(true)
       end
+    end
 
-      it 'check payment methods' do
+    context 'payment methods' do
+      it 'check payment method error false' do
+        expect(@payment_methods['error']).to eq(false)
+      end
+      it 'check payment method boleto true' do
+        expect(@payment_methods['paymentMethods']['BOLETO'].present?).to eq(true)
+      end
+      it 'check payment method balance true' do
+        expect(@payment_methods['paymentMethods']['BALANCE'].present?).to eq(true)
+      end
+      it 'check payment method online_debit true' do
+        expect(@payment_methods['paymentMethods']['ONLINE_DEBIT'].present?).to eq(true)
+      end
+      it 'check payment method credit_card true' do
         expect(@payment_methods['paymentMethods']['CREDIT_CARD'].present?).to eq(true)
       end
+      it 'check payment method deposit true' do
+        expect(@payment_methods['paymentMethods']['DEPOSIT'].present?).to eq(true)
+      end
+    end
 
-      it 'check card brand' do
+    context 'card information' do
+      it 'brand name is present' do
         expect(@card_brand['bin']['brand']['name'].present?).to eq(true)
       end
+    end
 
-      it 'check card token' do
+    context 'card token' do
+      it 'card token is present' do
         expect(@card_token.present?).to eq(true)
       end
+    end
 
-      it 'check installments' do
+    context 'installments' do
+      it 'installments is present' do
         expect(@installments['installments'].present?).to eq(true)
       end
+      it 'installments error is false' do
+        expect(@installments['error']).to eq(false)
+      end
+      it 'installments brand name is present' do
+        expect(@installments['installments'][@card_brand['bin']['brand']['name']].present?).to eq(true)
+      end
+      it 'check installments size' do
+        expect(@installments['installments'][@card_brand['bin']['brand']['name']].size).to be_between(1, 12).inclusive
+      end
+    end
 
+    context 'transaction' do
       it 'check transaction' do
         expect(@transaction.present?).to eq(true)
+        expect(@transaction['transaction'].present?).to eq(true)
+
+        # General information
+        expect(@transaction['transaction']['date'].present?).to eq(true)
+        expect(@transaction['transaction']['code'].present?).to eq(true)
+        expect(@transaction['transaction']['type'].present?).to eq(true)
+        expect(@transaction['transaction']['status'].present?).to eq(true)
+        expect(@transaction['transaction']['lastEventDate'].present?).to eq(true)
+        expect(@transaction['transaction']['paymentMethod'].present?).to eq(true)
+        expect(@transaction['transaction']['grossAmount'].present?).to eq(true)
+        expect(@transaction['transaction']['discountAmount'].present?).to eq(true)
+
+        # Fees
+        expect(@transaction['transaction']['creditorFees']['installmentFeeAmount'].present?).to eq(true)
+        expect(@transaction['transaction']['creditorFees']['intermediationRateAmount'].present?).to eq(true)
+        expect(@transaction['transaction']['creditorFees']['intermediationFeeAmount'].present?).to eq(true)
+        expect(@transaction['transaction']['netAmount'].present?).to eq(true)
+        expect(@transaction['transaction']['extraAmount'].present?).to eq(true)
+
+        # Items and installments
+        expect(@transaction['transaction']['installmentCount'].present?).to eq(true)
+        expect(@transaction['transaction']['itemCount'].present?).to eq(true)
+        expect(@transaction['transaction']['items'].present?).to eq(true)
+
+        # Sender information
+        expect(@transaction['transaction']['sender'].present?).to eq(true)
+        expect(@transaction['transaction']['sender']['name'].present?).to eq(true)
+        expect(@transaction['transaction']['sender']['email'].present?).to eq(true)
+        expect(@transaction['transaction']['sender']['phone'].present?).to eq(true)
+        expect(@transaction['transaction']['sender']['phone']['areaCode'].present?).to eq(true)
+        expect(@transaction['transaction']['sender']['phone']['number'].present?).to eq(true)
+        expect(@transaction['transaction']['sender']['documents'].present?).to eq(true)
+        expect(@transaction['transaction']['sender']['documents']['document'].present?).to eq(true)
+        expect(@transaction['transaction']['sender']['documents']['document']['type'].present?).to eq(true)
+        expect(@transaction['transaction']['sender']['documents']['document']['value'].present?).to eq(true)
+
+        # Shipping information
+        expect(@transaction['transaction']['shipping'].present?).to eq(true)
+        expect(@transaction['transaction']['shipping']['address'].present?).to eq(true)
+        expect(@transaction['transaction']['shipping']['address']['street'].present?).to eq(true)
+        expect(@transaction['transaction']['shipping']['address']['number'].present?).to eq(true)
+        expect(@transaction['transaction']['shipping']['address']['district'].present?).to eq(true)
+        expect(@transaction['transaction']['shipping']['address']['city'].present?).to eq(true)
+        expect(@transaction['transaction']['shipping']['address']['state'].present?).to eq(true)
+        expect(@transaction['transaction']['shipping']['address']['country'].present?).to eq(true)
+        expect(@transaction['transaction']['shipping']['address']['postalCode'].present?).to eq(true)
+        expect(@transaction['transaction']['shipping']['type'].present?).to eq(true)
+        expect(@transaction['transaction']['shipping']['cost'].present?).to eq(true)
+
+        # Gateway information
+        expect(@transaction['transaction']['gatewaySystem'].present?).to eq(true)
+        expect(@transaction['transaction']['gatewaySystem']['type'].present?).to eq(true)
+        expect(@transaction['transaction']['gatewaySystem']['authorizationCode'].present?).to eq(true)
+        expect(@transaction['transaction']['gatewaySystem']['nsu'].present?).to eq(true)
+
+        # PublicKey
+        expect(@transaction['transaction']['primaryReceiver']['publicKey'].present?).to eq(true)
       end
     end
   end
@@ -51,9 +142,6 @@ RSpec.describe 'Pagseguro', type: :request do
     app_id = Rails.application.credentials[Rails.env.to_sym][:app_id]
     app_key = Rails.application.credentials[Rails.env.to_sym][:app_key]
     headers = { 'Accept': 'application/vnd.pagseguro.com.br.v3+xml', 'Content-Type': 'application/x-www-form-urlencoded'}
-    puts '    Sending request to Pagseguro to create a SESSION, wait a moment ...'
-    puts "    Request => #{@url_base_ws}/sessions"
-    puts ''
     VCR.use_cassette('pagseguro/session') do
       response = HTTParty.post("#{@url_base_ws}/sessions?appId=#{app_id}&appKey=#{app_key}", headers: headers)
       Hash.from_xml(response.parsed_response.gsub("\n", ''))
@@ -63,9 +151,6 @@ RSpec.describe 'Pagseguro', type: :request do
   # Second step Get Payments Methods
   def get_payment_methods(session_id)
     headers = { 'Accept': 'application/vnd.pagseguro.com.br.v1+json;charset=ISO-8859-1' }
-    puts '    Sending request to Pagseguro to obtain PAYMENT METHODS, wait a moment ...'
-    puts "    Request => #{@url_base_ws}/payment-methods"
-    puts ''
     VCR.use_cassette('pagseguro/payment_methods') do
       response = HTTParty.get("#{@url_base_ws}/payment-methods?amount=10.00&sessionId=#{session_id}", headers: headers)
       JSON.parse(response)
@@ -75,9 +160,6 @@ RSpec.describe 'Pagseguro', type: :request do
   # Third step get card brand
   def get_card_brand(session_id)
     first_6_digits = '411111' # Card test
-    puts '    Sending request to get CARD DATA, wait a moment ...'
-    puts "    Request => #{@url_base_helpers}/df-fe/mvc/creditcard/v1/getBin"
-    puts ''
     VCR.use_cassette('pagseguro/card_info') do
       response = HTTParty.get("#{@url_base_helpers}/df-fe/mvc/creditcard/v1/getBin?tk=#{session_id}&creditCard=#{first_6_digits}")
       body = response.body
@@ -97,9 +179,6 @@ RSpec.describe 'Pagseguro', type: :request do
       'cardExpirationMonth': '12',
       'cardExpirationYear': '2030'
     }
-    puts '    Sending request to get CARD TOKEN, wait a moment ...'
-    puts "    Request => #{@url_base_helpers}/v2/cards"
-    puts ''
     VCR.use_cassette('pagseguro/card_token') do
       response = HTTParty.post("#{@url_base_helpers}/v2/cards?email=#{@email}&token=#{@token}", body: body, headers: headers)
       return unless response.headers['content-type'] == 'application/json'
@@ -118,9 +197,6 @@ RSpec.describe 'Pagseguro', type: :request do
       'amount': '10.00',
       'creditCardBrand': brand_name
     }
-    puts '    Sending request to get CARD INSTALLMENTS, wait a moment ...'
-    puts "    Request => #{@url_base}/checkout/v2/installments.json"
-    puts ''
     VCR.use_cassette('pagseguro/installments') do
       response = HTTParty.get("#{@url_base}/checkout/v2/installments.json", query: query, verify: false)
       JSON.parse(response.body)
@@ -131,9 +207,6 @@ RSpec.describe 'Pagseguro', type: :request do
   def send_card_transaction(card_token)
     headers = { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
     body = body_transaction_mock(card_token)
-    puts '    Sending request to generate TRANSACTION, wait a moment ...'
-    puts "    Request => #{@url_base_ws}/transactions"
-    puts ''
     VCR.use_cassette('pagseguro/transaction') do
       response = HTTParty.post("#{@url_base_ws}/transactions/", body: body, headers: headers)
       Hash.from_xml(response.body)
@@ -144,19 +217,24 @@ RSpec.describe 'Pagseguro', type: :request do
     {
       'email': @email,
       'token': @token,
+
       'item[1].id': '1',
       'item[1].description': 'Recargar em conta',
       'item[1].amount': '11.00',
       'item[1].quantity': '1',
+
       'payment.mode': 'default',
       'payment.method': 'creditCard',
+
       'currency': 'BRL',
+
       'sender.name': 'Tiago de Lima Alves',
       'sender.CPF': '16261677026',
       'sender.areaCode': '82',
       'sender.phone': '999999999',
       'sender.email': 'tiago@sandbox.pagseguro.com.br',
       'sender.ip': '187.65.83.78',
+
       'shipping.address.street': 'Conj. Celly Loureiro, Qd - E',
       'shipping.address.number': '71',
       'shipping.address.district': 'Benedito Bentes',
@@ -164,15 +242,18 @@ RSpec.describe 'Pagseguro', type: :request do
       'shipping.address.city': 'Maceió',
       'shipping.address.state': 'AL',
       'shipping.address.country': 'BRA',
-      'creditCard.token': card_token,
+
       'installment.quantity': '2',
       'installment.value': '5.50',
       'installment.noInterestInstallmentQuantity': '2',
+
+      'creditCard.token': card_token,
       'creditCard.holder.name': 'Tiago de Lima Alves',
       'creditCard.holder.CPF': '16261677026',
       'creditCard.holder.birthDate': '29/05/1984',
       'creditCard.holder.areaCode': '82',
       'creditCard.holder.phone': '999999999',
+
       'billingAddress.street': 'Conj. Celly Loureiro, Qd - E',
       'billingAddress.number': '71',
       'billingAddress.district': 'Benedito Bentes',
@@ -180,6 +261,7 @@ RSpec.describe 'Pagseguro', type: :request do
       'billingAddress.city': 'Maceió',
       'billingAddress.state': 'AL',
       'billingAddress.country': 'BRA',
+
       'notificationURL': 'http://localhost:3000/pagseguro/notify'
     }
   end
