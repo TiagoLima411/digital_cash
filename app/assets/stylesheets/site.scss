@@ -43,11 +43,16 @@
 
 .section1-register {
   background: image-url("bg-new-user2.jpg") no-repeat right top;
-  background-size: cover;
+  /* Set a specific height */
+  padding: 60px 0;
   width: 100%;
-  height: 700px;
-  padding: 40px 0;
-  // color:red;
+  height: 400px; 
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .section-dashboard-user{
