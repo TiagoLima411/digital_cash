@@ -40,10 +40,21 @@ To set environment variables, use the command below:
 
     EDITOR=nano rails credentials:edit
 
+### Environment variables used so far.  
+devise_key: <you_devise_key>  
+email: <you_email_pagseguro>  
+pag_seguro_test_token: <you_pagseguro_token>  
+app_id: <you_pagseguro_app_id_>  
+app_key: <you_pagseguro_app_key>  
+
 To check your keys run the commands below:
     
     rails c
     Rails.application.credentials[Rails.env.to_sym][:you_key]
+
+To run the tests:
+
+    bin/rspec
 
 This project is not yet in the production environment, any contribution or constructive criticism is welcome.
 Any questions send email to `tiagolima.0411@gmail.com` or create issue.
