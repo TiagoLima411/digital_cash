@@ -22,10 +22,14 @@ RSpec.configure do |config|
   end
 
   VCR.configure do |config|
-    config.cassette_library_dir = "spec/fixtures/vcr_cassettes"
+    config.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
     config.hook_into :webmock
+    config.filter_sensitive_data('<you_app_id>') { Rails.application.credentials[Rails.env.to_sym][:app_id] }
+    config.filter_sensitive_data('<you_app_key>') { Rails.application.credentials[Rails.env.to_sym][:app_key] }
+    config.filter_sensitive_data('<you_token>') { Rails.application.credentials[Rails.env.to_sym][:pag_seguro_test_token] }
+    config.filter_sensitive_data('<you_email>') { Rails.application.credentials[Rails.env.to_sym][:email] }
   end
-  
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.

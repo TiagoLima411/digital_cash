@@ -2,10 +2,10 @@
 http_interactions:
 - request:
     method: post
-    uri: https://df.uol.com.br/v2/cards?email=tiagolima.0411@gmail.com&token=31B7178501944F20BD8D78F51A93C880
+    uri: https://df.uol.com.br/v2/cards?email=<you_email>&token=<you_token>
     body:
       encoding: UTF-8
-      string: sessionId=bd715027ce3b4ac68de2c6e731fe6278&amount=11.00&cardNumber=4111111111111111&cardBrand=visa&cardCvv=123&cardExpirationMonth=12&cardExpirationYear=2030
+      string: sessionId=2db5c1bc44644fd8b3ca9bbf8ae7e564&amount=11.00&cardNumber=4111111111111111&cardBrand=visa&cardCvv=123&cardExpirationMonth=12&cardExpirationYear=2030
     headers:
       Content-Type:
       - application/x-www-form-urlencoded
@@ -17,7 +17,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 10 Feb 2021 18:58:00 GMT
+      - Thu, 11 Feb 2021 11:51:48 GMT
       X-Frame-Options:
       - SAMEORIGIN
       X-Xss-Protection:
@@ -35,12 +35,12 @@ http_interactions:
       Connection:
       - close
       Set-Cookie:
-      - TS01d40667=01ed0a5ec2216cd64199da84f17c0cc7dc64371db793cc4247c1e47c396001e785f555ebcca7475c170513af918524fbab579bdb53;
+      - TS01d40667=01ed0a5ec2667994ddaea05028795608639038967afe5eb2261af479da021ca0c79c09dbace4b620da239acd6cce2d39d59807194c;
         Max-Age=500; Path=/; Domain=.df.uol.com.br
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
-      string: '{"token":"13093554be474e84a7bdca27929d83e0"}'
-  recorded_at: Wed, 10 Feb 2021 18:58:00 GMT
+      string: '{"token":"6f17356a762e4af2afabf9b57cfb22eb"}'
+  recorded_at: Thu, 11 Feb 2021 11:51:48 GMT
 recorded_with: VCR 6.0.0
