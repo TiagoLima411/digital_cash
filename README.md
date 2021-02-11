@@ -25,6 +25,7 @@ Next, execute the database commands:
 
     rails db:create
     rails db:migrate
+    rails db:seed
 
 ### Start the app
 
@@ -33,6 +34,10 @@ Start the Rails app to see the In-Context-Editor added to the To-Do application.
     rails s -b 0.0.0.0
 
 You can find your app now by pointing your browser to http://localhost:3000.
+
+LOGIN  
+username: elon  
+password: 123456   
 
 ## More information
 
