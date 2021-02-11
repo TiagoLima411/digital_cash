@@ -137,7 +137,7 @@ class MembersController < ApplicationController
   
   def get_url_base
     if Rails.env.production?
-      return 'https://portal.nobe.com.br'
+      return 'https://portal.dc.com.br'
     else
       return "http://#{request.host}:#{request.port}"
     end

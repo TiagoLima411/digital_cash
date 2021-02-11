@@ -11,7 +11,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
 
-  <title>NOBE - Software </title>
+  <title>Digital Cash - Software </title>
 
   <% icon = image_url ""%>
   <link rel="shortcut icon" type="image/x-icon" href="<%= icon %>">
@@ -37,7 +37,7 @@
         </li>
         <li class="nav-item">
           <a class="navbar-brand" href="/dashboard" style="padding: 10px 0px; !important;" data-turbolinks="false">
-            <h4 class="brand-text main-logo">Nobe Payments</h4>
+            <h4 class="brand-text main-logo">Digital Cash Payments</h4>
           </a>
         </li>
         <li class="nav-item d-md-none">
@@ -54,15 +54,15 @@
             <a style="color: #d3d4d6;" class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu"></i></a>
               <% unless current_user.account.nil?%>
                 <% if current_user.account.active %>
-                  <p class="m-0 w-100" style="color: #d3d4d6;">Bem vindo à <b>Nobe! </b>Seu Link de indicação é
+                  <p class="m-0 w-100" style="color: #d3d4d6;">Bem vindo à <b>Digital Cash! </b>Seu Link de indicação é
                     <b>
-                      <a style="color: #29afa3;" target="_blank" href="https://portal.nobe.com.br/convite/<%=current_user.username%>">portal.nobe.com.br/convite/<%=current_user.username%></a>
+                      <a style="color: #29afa3;" target="_blank" href="https://portal.dc.com.br/convite/<%=current_user.username%>">portal.dc.com.br/convite/<%=current_user.username%></a>
                     </b>
                   </p>
                 <% else %>
-                  <p class="m-0 w-100" style="color: #d3d4d6;">Sua Conta <b>Nobe! </b> está inativa! Para ativar envie email para
+                  <p class="m-0 w-100" style="color: #d3d4d6;">Sua Conta <b>Digital Cash! </b> está inativa! Para ativar envie email para
                     <b>
-                      <a style="color: #29afa3;" target="_blank" href="#">suporte@nobe.com.br</a>
+                      <a style="color: #29afa3;" target="_blank" href="#">suporte@dc.com.br</a>
                     </b>
                   </p>
                 <% end %>
