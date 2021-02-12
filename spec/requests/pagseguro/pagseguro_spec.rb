@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Pagseguro API', type: :request do
-  describe 'Sandbox Pagseguro integration' do
+  describe 'Sandbox Pagseguro integration credit card' do
     before(:context) do
       @url_base         = 'https://sandbox.pagseguro.uol.com.br'
       @url_base_ws      = 'https://ws.sandbox.pagseguro.uol.com.br'
@@ -142,7 +142,7 @@ RSpec.describe 'Pagseguro API', type: :request do
     app_id = Rails.application.credentials[Rails.env.to_sym][:app_id]
     app_key = Rails.application.credentials[Rails.env.to_sym][:app_key]
     headers = { 'Accept': 'application/vnd.pagseguro.com.br.v3+xml', 'Content-Type': 'application/x-www-form-urlencoded'}
-    VCR.use_cassette('pagseguro/session') do
+    VCR.use_cassette('pagseguro_credit_card/session') do
       response = HTTParty.post("#{@url_base_ws}/sessions?appId=#{app_id}&appKey=#{app_key}", headers: headers)
       Hash.from_xml(response.parsed_response.gsub("\n", ''))
     end
@@ -151,7 +151,7 @@ RSpec.describe 'Pagseguro API', type: :request do
   # Second step Get Payments Methods
   def get_payment_methods(session_id)
     headers = { 'Accept': 'application/vnd.pagseguro.com.br.v1+json;charset=ISO-8859-1' }
-    VCR.use_cassette('pagseguro/payment_methods') do
+    VCR.use_cassette('pagseguro_credit_card/payment_methods') do
       response = HTTParty.get("#{@url_base_ws}/payment-methods?amount=10.00&sessionId=#{session_id}", headers: headers)
       JSON.parse(response)
     end
@@ -160,7 +160,7 @@ RSpec.describe 'Pagseguro API', type: :request do
   # Third step get card brand
   def get_card_brand(session_id)
     first_6_digits = '411111' # Card test
-    VCR.use_cassette('pagseguro/card_info') do
+    VCR.use_cassette('pagseguro_credit_card/card_info') do
       response = HTTParty.get("#{@url_base_helpers}/df-fe/mvc/creditcard/v1/getBin?tk=#{session_id}&creditCard=#{first_6_digits}")
       body = response.body
       JSON.parse(body)
@@ -179,7 +179,7 @@ RSpec.describe 'Pagseguro API', type: :request do
       'cardExpirationMonth': '12',
       'cardExpirationYear': '2030'
     }
-    VCR.use_cassette('pagseguro/card_token') do
+    VCR.use_cassette('pagseguro_credit_card/card_token') do
       response = HTTParty.post("#{@url_base_helpers}/v2/cards?email=#{@email}&token=#{@token}", body: body, headers: headers)
       return unless response.headers['content-type'] == 'application/json'
 
@@ -197,7 +197,7 @@ RSpec.describe 'Pagseguro API', type: :request do
       'amount': '10.00',
       'creditCardBrand': brand_name
     }
-    VCR.use_cassette('pagseguro/installments') do
+    VCR.use_cassette('pagseguro_credit_card/installments') do
       response = HTTParty.get("#{@url_base}/checkout/v2/installments.json", query: query, verify: false)
       JSON.parse(response.body)
     end
@@ -207,7 +207,7 @@ RSpec.describe 'Pagseguro API', type: :request do
   def send_card_transaction(card_token)
     headers = { 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8' }
     body = body_transaction_mock(card_token)
-    VCR.use_cassette('pagseguro/transaction') do
+    VCR.use_cassette('pagseguro_credit_card/transaction') do
       response = HTTParty.post("#{@url_base_ws}/transactions/", body: body, headers: headers)
       Hash.from_xml(response.body)
     end

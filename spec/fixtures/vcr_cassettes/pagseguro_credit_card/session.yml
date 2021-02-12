@@ -23,7 +23,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Thu, 11 Feb 2021 11:51:42 GMT
+      - Fri, 12 Feb 2021 20:16:20 GMT
       Server:
       - Apache-Coyote/1.1
       Vary:
@@ -31,13 +31,13 @@ http_interactions:
       X-Cache:
       - Miss from cloudfront
       Via:
-      - 1.1 fcfe689f8e288cc056be935c1e8696a4.cloudfront.net (CloudFront)
+      - 1.1 a83b34913b6ec6078b25b6fbf1341cf3.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - GRU3-C1
       X-Amz-Cf-Id:
-      - xh5JSxPuFGwh-TplBzxNAGWmektNjOgS3JXW50lT5awIFbc0jWIz1A==
+      - xHgu5kxsX-VKFTUMrx2kAgZLqz3mCn0ztjKSJkN353VWhZhdX-uw9w==
     body:
       encoding: UTF-8
-      string: <?xml version="1.0" encoding="UTF-8" standalone="yes"?><session><id>2db5c1bc44644fd8b3ca9bbf8ae7e564</id></session>
-  recorded_at: Thu, 11 Feb 2021 11:51:42 GMT
+      string: <?xml version="1.0" encoding="UTF-8" standalone="yes"?><session><id>24592eb4756f4469b8c5b31198ccc28f</id></session>
+  recorded_at: Fri, 12 Feb 2021 20:16:20 GMT
 recorded_with: VCR 6.0.0

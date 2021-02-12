@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://df.uol.com.br/df-fe/mvc/creditcard/v1/getBin?creditCard=411111&tk=2db5c1bc44644fd8b3ca9bbf8ae7e564
+    uri: https://df.uol.com.br/df-fe/mvc/creditcard/v1/getBin?creditCard=411111&tk=24592eb4756f4469b8c5b31198ccc28f
     body:
       encoding: US-ASCII
       string: ''
@@ -13,7 +13,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 11 Feb 2021 11:51:48 GMT
+      - Fri, 12 Feb 2021 20:16:27 GMT
       X-Frame-Options:
       - SAMEORIGIN
       X-Xss-Protection:
@@ -39,12 +39,12 @@ http_interactions:
       Connection:
       - close
       Set-Cookie:
-      - TS01d40667=01ed0a5ec2e63d878a740b9bb18bcceb3a12e88d4c57e78ca337a8448f3c6a2ef94621f1db4be437363915741c907088597e6307f0;
+      - TS01d40667=01ed0a5ec29f864444ceb332e5520c871bdaf0c9e23690c7d334dd45aa9b0e1780721d751273ec76555a532e9c18fd32f635bb9970;
         Max-Age=500; Path=/; Domain=.df.uol.com.br
       Transfer-Encoding:
       - chunked
     body:
       encoding: UTF-8
       string: '{"bin":{"length":null,"country":{"name":"Brazil","id":76,"isoCode":"BR","isoCodeThreeDigits":"BRA"},"brand":{"name":"visa"},"cvvSize":3,"expirable":"n","validationAlgorithm":"LUHN","bank":null,"cardLevel":null,"bin":411111,"statusMessage":"Success","reasonMessage":null}}'
-  recorded_at: Thu, 11 Feb 2021 11:51:48 GMT
+  recorded_at: Fri, 12 Feb 2021 20:16:27 GMT
 recorded_with: VCR 6.0.0

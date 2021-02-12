@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://sandbox.pagseguro.uol.com.br/checkout/v2/installments.json?amount=10.00&creditCardBrand=visa&sessionId=2db5c1bc44644fd8b3ca9bbf8ae7e564
+    uri: https://sandbox.pagseguro.uol.com.br/checkout/v2/installments.json?amount=10.00&creditCardBrand=visa&sessionId=24592eb4756f4469b8c5b31198ccc28f
     body:
       encoding: US-ASCII
       string: ''
@@ -20,7 +20,7 @@ http_interactions:
       Content-Type:
       - application/json;charset=ISO-8859-1
       Date:
-      - Thu, 11 Feb 2021 11:51:48 GMT
+      - Fri, 12 Feb 2021 20:16:29 GMT
       Ec-Rule-Version:
       - 20210119-01
       Expires:
@@ -30,8 +30,8 @@ http_interactions:
       Server:
       - Apache-Coyote/1.1
       Set-Cookie:
-      - JSESSIONID=lz+910HgMSI3k9t1BTOycw**.ps; Path=/; Secure; SameSite=Strict
-      - csrfId=95; Path=/; HttpOnly; Expires=11 Feb 2021 15:51:49 GMT; Secure; SameSite=Strict
+      - JSESSIONID=CNn+zfpBKwp7WEh7J6K0MA**.ps; Path=/; Secure; SameSite=Strict
+      - csrfId=55; Path=/; HttpOnly; Expires=13 Feb 2021 24:16:28 GMT; Secure; SameSite=Strict
       Vary:
       - User-Agent
       X-Xss-Protection:
@@ -41,5 +41,5 @@ http_interactions:
     body:
       encoding: UTF-8
       string: '{"error":false,"installments":{"visa":[{"quantity":1,"installmentAmount":10.00,"totalAmount":10.00,"interestFree":true},{"quantity":2,"installmentAmount":5.23,"totalAmount":10.45,"interestFree":false}]}}'
-  recorded_at: Thu, 11 Feb 2021 11:51:49 GMT
+  recorded_at: Fri, 12 Feb 2021 20:16:29 GMT
 recorded_with: VCR 6.0.0
