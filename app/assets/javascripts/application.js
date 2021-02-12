@@ -102,30 +102,46 @@ function inicializeDatePicker() {
 
 function buscarCep(){
     $( "#cep" ).blur(function() {
-        if(this.value){
-            cep = this.value.replace('-', '')
-            $.get( "https://viacep.com.br/ws/" + cep + "/json/", function( data ) {
-                $('#logradouro').val(data.logradouro);
-                $('#complemento').val(data.complemento);
-                $('#bairro').val(data.bairro);
-                $.get( "/get_cities_by_name?term=" + data.localidade, function( data2 ) {
-                    $.get( "/get_cities?state_id=" + data2.cities[0].state.id+"&input_id=cbbCity", function(){
-                        $('#cbbState').val(data2.cities[0].state.id).trigger('change', [true]);
-                        $('#cbbCity').val(data2.cities[0].id).trigger('change');
-                    })
-                });
-            });
-        }
+      if(this.value){
+        let cep = this.value.replace('-', '')
+        $.get( "https://viacep.com.br/ws/" + cep + "/json/", function( data ) {
+          $('#logradouro').val(data.logradouro);
+          $('#complemento').val(data.complemento);
+          $('#bairro').val(data.bairro);
+          $.get( "/get_cities_by_name?term=" + data.localidade, function( data2 ) {
+            $.get( "/get_cities?state_id=" + data2.cities[0].state.id+"&input_id=cbbCity", function(data3){
+              $('#cbbState').val(data2.cities[0].state.id).trigger('change', [true]);
+              recreateCbbCity(data3.cities);
+              $('#cbbCity').val(data2.cities[0].id);
+            })
+          });
+        });
+      }
     });
-
+  
     $("#cbbState").change(function (event, manualTrigger) {
-        if (manualTrigger == undefined) {
-            if (this.value) {
-                var state_id = this.value;
-                $.get("/get_cities?state_id=" + state_id + "&input_id=cbbCity");
-            }
+      if (manualTrigger == undefined) {
+        if (this.value) {
+          var state_id = this.value;
+          $.get("/get_cities?state_id=" + state_id + "&input_id=cbbCity", function(data) {
+            recreateCbbCity(data.cities);
+          });
         }
-    });
+      }
+    });  
+}
+
+function recreateCbbCity(cities) {
+    let select = document.getElementById('cbbCity');
+    if (select) {
+      select.innerHTML = '';
+      $.each(cities, function (key, val) {
+        let option = document.createElement('option');
+        option.value = val.id;
+        option.text  = val.name;
+        select.appendChild(option);
+      });
+    }
 }
 
 function inicializeAppMenu(){
