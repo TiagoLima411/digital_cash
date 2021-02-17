@@ -141,6 +141,7 @@ group :development, :test, :homologation do
   gem 'spring-commands-rspec'
   gem 'webmock'
   gem 'vcr'
+  gem 'rails-controller-testing'
 end
 
 group :development, :homologation do
