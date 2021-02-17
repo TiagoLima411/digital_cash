@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_10_152131) do
+ActiveRecord::Schema.define(version: 2021_02_16_172616) do
 
   create_table "account_balances", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
@@ -159,6 +159,14 @@ ActiveRecord::Schema.define(version: 2020_09_10_152131) do
     t.index ["user_id"], name: "index_outgoings_on_user_id"
   end
 
+  create_table "pagseguro_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "recharge_id"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recharge_id"], name: "index_pagseguro_histories_on_recharge_id"
+  end
+
   create_table "rate_settings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "day_of_week"
     t.integer "rate_cents"
@@ -167,6 +175,36 @@ ActiveRecord::Schema.define(version: 2020_09_10_152131) do
     t.time "end_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "recharges", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.integer "transaction_type"
+    t.integer "pagseguro_status", default: 0, null: false
+    t.integer "pagseguro_payment_method", default: 0, null: false
+    t.integer "gross_value_cents"
+    t.integer "discount_value_cents"
+    t.decimal "installment_fee_amount", precision: 5, scale: 2
+    t.decimal "intermediation_rate_amount", precision: 5, scale: 2
+    t.decimal "intermediation_fee_amount", precision: 5, scale: 2
+    t.integer "net_value_cents"
+    t.integer "extra_value_cents"
+    t.integer "installment_count"
+    t.integer "item_count"
+    t.string "code"
+    t.string "payment_method_code"
+    t.string "authorizationCode"
+    t.string "nsu"
+    t.string "tid"
+    t.string "establishment_code"
+    t.string "acquirer_Name"
+    t.string "primary_receiver_key"
+    t.datetime "date"
+    t.datetime "transaction_date"
+    t.datetime "last_event_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_recharges_on_user_id"
   end
 
   create_table "states", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -211,5 +249,7 @@ ActiveRecord::Schema.define(version: 2020_09_10_152131) do
   add_foreign_key "nobe_revenues", "bank_transactions"
   add_foreign_key "nobe_revenues", "users"
   add_foreign_key "outgoings", "users"
+  add_foreign_key "pagseguro_histories", "recharges"
+  add_foreign_key "recharges", "users"
   add_foreign_key "users", "members"
 end
