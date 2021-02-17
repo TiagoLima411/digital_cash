@@ -46,7 +46,7 @@ Rails.application.routes.draw do
   resources :bank_transactions, only: [:new, :create]
 
   # Recharges
-  resources :recharges, only: [:new]
+  resources :recharges, only: [:new, :create]
 
   # SessionPayments (Middlewares)
   get '/outgoing_payment_password', to: 'session_payments#middleware_outgoing_payment_password'

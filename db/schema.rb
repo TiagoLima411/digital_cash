@@ -179,7 +179,6 @@ ActiveRecord::Schema.define(version: 2021_02_16_172616) do
 
   create_table "recharges", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
-    t.integer "transaction_type"
     t.integer "pagseguro_status", default: 0, null: false
     t.integer "pagseguro_payment_method", default: 0, null: false
     t.integer "gross_value_cents"

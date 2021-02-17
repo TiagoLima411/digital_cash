@@ -98,6 +98,20 @@ class ApplicationController < ActionController::Base
     }
   end
 
+  def handle_exception(e)
+    #Future integrations
+    #Thread.new do
+    #  slack = Slack::Notifier.new 'https://hooks.slack.com/services/' do
+    #    defaults channel: '#dc-logs',
+    #             username: 'digital_cash',
+    #             icon_emoji: ':robot_face:'
+    #  end
+    #  slack.ping("ERROR: #{e.message}\n#{e.backtrace}")
+    #end
+    log_exception_handler(e)
+    #Sentry.capture_exception(e)
+  end
+
   private
 
   def prepare_exception_notifier

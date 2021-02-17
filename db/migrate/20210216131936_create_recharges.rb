@@ -2,7 +2,6 @@ class CreateRecharges < ActiveRecord::Migration[5.2]
   def change
     create_table :recharges do |t|
       t.references :user, foreign_key: true
-      t.integer :transaction_type
       t.integer :pagseguro_status, default: 0, null: false
       t.integer :pagseguro_payment_method, default: 0, null: false
       t.integer :gross_value_cents

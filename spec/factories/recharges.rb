@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :recharge do
 
-    pagseguro_payment_method { 1 } 
-    pagseguro_status { 1 }
+    pagseguro_payment_method { %w[credit_card billet debit_online].sample } 
+    pagseguro_status { %w[awaiting_payment in_analysis paid available in_dispute returned canceled].sample }
     gross_value_cents { 1 }
     discount_value_cents { 1 }
     installment_fee_amount { 1.0 }
@@ -26,4 +26,5 @@ FactoryBot.define do
 
     user
   end
+  
 end
