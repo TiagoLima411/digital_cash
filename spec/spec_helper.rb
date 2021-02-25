@@ -24,11 +24,21 @@ RSpec.configure do |config|
   VCR.configure do |config|
     config.cassette_library_dir = 'spec/fixtures/vcr_cassettes'
     config.hook_into :webmock
+    config.ignore_localhost = true
     config.filter_sensitive_data('<you_app_id>') { Rails.application.credentials[Rails.env.to_sym][:app_id] }
     config.filter_sensitive_data('<you_app_key>') { Rails.application.credentials[Rails.env.to_sym][:app_key] }
     config.filter_sensitive_data('<you_token>') { Rails.application.credentials[Rails.env.to_sym][:pag_seguro_test_token] }
     config.filter_sensitive_data('<you_email>') { Rails.application.credentials[Rails.env.to_sym][:email] }
   end
+
+  # Capybara
+  Capybara::register_driver :chrome do |app|
+    Capybara::Selenium::Driver.new app, browser: :chrome,
+      options: Selenium::WebDriver::Chrome::Options.new(args: %w[headless disable-gpu])
+  end
+
+  Capybara.javascript_driver = :chrome
+  Capybara.default_max_wait_time = 5
 
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
