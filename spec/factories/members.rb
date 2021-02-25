@@ -15,6 +15,8 @@ FactoryBot.define do
     address_number { Faker::Number.number(digits = 3) }
     address_reference { Faker::Address.street_address }
 
-    user
+    association :state
+    association :city
+    association :user
   end
 end
