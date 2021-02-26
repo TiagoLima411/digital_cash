@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :member do
     name { Faker::Name.name }
-    email { Faker::Internet.email }
+    email { "#{Faker::Name.first_name.downcase}@sandbox.pagseguro.com.br" }
     birthday { Faker::Date.birthday }
     gender { 'male' }
     mother_name { Faker::Name.feminine_name }
