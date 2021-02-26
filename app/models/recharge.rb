@@ -7,12 +7,37 @@ class Recharge < ApplicationRecord
 
 	after_save :generate_history, if: :saved_change_to_pagseguro_status?
 	
-	enum pagseguro_payment_method: %i[credit_card billet debit_online]
-	enum pagseguro_status: %i[awaiting_payment in_analysis paid available in_dispute returned canceled]
+	enum pagseguro_payment_method: %i[others credit_card billet debit_online]
+	enum pagseguro_status: %i[undefined awaiting_payment in_analysis paid available in_dispute returned canceled]
 	
-	def self.generate_credit_cad(recharge)
-		recharge = Recharge.new(recharge)
-		recharge.credit_card!
+	def self.generate_credit_cad(args, user)
+		recharge = Recharge.new
+		transaction = args['transaction']
+		recharge.user = user
+		recharge.pagseguro_status = transaction['status'].to_i
+		recharge.pagseguro_payment_method = transaction['paymentMethod']['type'].to_i
+		
+		recharge.gross_value_cents = to_cents(transaction['grossAmount'])
+		recharge.discount_value_cents = to_cents(transaction['discountAmount'])
+		recharge.installment_fee_amount = transaction['creditorFees']['installmentFeeAmount'].to_f
+		recharge.intermediation_rate_amount = transaction['creditorFees']['intermediationRateAmount'].to_f
+		recharge.intermediation_fee_amount = transaction['creditorFees']['intermediationFeeAmount'].to_f
+		recharge.net_value_cents = to_cents(transaction['netAmount'])
+		recharge.extra_value_cents = to_cents(transaction['extraAmount'])
+		recharge.installment_count = transaction['installmentCount'].to_i
+		recharge.item_count = transaction['itemCount'].to_i
+		recharge.code = transaction['code']
+		recharge.payment_method_code = transaction['paymentMethod']['code']
+		recharge.authorizationCode = transaction['gatewaySystem']['authorizationCode']
+		recharge.nsu = transaction['gatewaySystem']['nsu']
+		recharge.tid = transaction['gatewaySystem']['tid']
+		recharge.establishment_code = transaction['gatewaySystem']['establishmentCode']
+		recharge.acquirer_Name = transaction['gatewaySystem']['acquirerName']
+		recharge.primary_receiver_key = transaction['primaryReceiver']['publicKey']
+		recharge.date = transaction['date'].to_time
+		recharge.transaction_date = transaction['date'].to_time
+		recharge.last_event_date = transaction['lastEventDate'].to_time
+
 		recharge if recharge.save
 	end
 
@@ -31,6 +56,10 @@ class Recharge < ApplicationRecord
 	end
 
 	private
+
+	def self.to_cents(value)
+		(value.to_f * 100).to_i
+	end
 
 	def generate_history
 		PagseguroHistory.generate(self)

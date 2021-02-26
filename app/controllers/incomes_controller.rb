@@ -1,6 +1,6 @@
 class IncomesController < ApplicationController
   before_action :authenticate_user!
-
+  # TODO - polices
   def new
     @income = Income.new
   end

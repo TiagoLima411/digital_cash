@@ -66,6 +66,10 @@ function init(){
 
 function applyMasks(){
     $(".date").mask("99/99/9999");
+    $(".numeric").mask('0#');
+    $(".cvv_format").mask('000');
+    $(".month_format").mask('00', { placeholder: "00" });
+    $(".year_format").mask("9999");
     $(".celular").mask("(99)99999-9999");
     $(".telefone").mask("(99)9999-9999");
     $(".cnpj").mask("99.999.999/9999-99");

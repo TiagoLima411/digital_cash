@@ -38,7 +38,7 @@ Rails.application.routes.draw do
   resources :account_extracts, only: [:index]
 
   # Incomes
-  resources :incomes, only: [:new, :create]
+  #resources :incomes, only: [:new, :create]
 
   # Outgoing
   resources :outgoings, only: [:new, :create] 
@@ -47,6 +47,7 @@ Rails.application.routes.draw do
 
   # Recharges
   resources :recharges, only: [:new, :create]
+  post '/send_card_transaction', to: 'recharges#send_card_transaction'
 
   # SessionPayments (Middlewares)
   get '/outgoing_payment_password', to: 'session_payments#middleware_outgoing_payment_password'

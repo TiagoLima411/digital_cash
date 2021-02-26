@@ -1,50 +1,33 @@
 class RechargesController < ApplicationController
+  before_action :set_recharge, only: %i[send_card_transaction]
+
+  def send_card_transaction
+  	response = Pagseguro::Operation.send_card_transaction(@card_info, current_user)
+  	respond_to do |format|
+  	  if response.instance_of? Recharge
+  	  	flash[:success] = 'Recarga criada com sucesso.'
+  	  	format.html { redirect_to account_extracts_path }
+  	  else
+  	  	flash[:error] = response[:error][:msg]
+  	  	format.html { redirect_to new_recharge_path }
+  	  end
+  	end
+  end
 	
-	def new
-		@recharge = Recharge.new
-	end
+  def new
+    @recharge = Recharge.new
+  end
 
-	def create
-		@recharge = Recharge.new(recharge_params)
-		respond_to do |format|
-			if @recharge.save
-				flash[:success] = 'Recarga criada com sucesso.'
-				format.html { render :new }
-			else
-				flash[:error] = 'Erro ao criar recarga.'
-				format.html { render :new  }
-			end
-		end
-	end
+  private
 
-	private
-
-	def recharge_params
-		params.require(:recharge).permit(
-			:id,
-			:user_id,
-			:pagseguro_payment_method,
-			:pagseguro_status,
-			:gross_value_cents,
-			:discount_value_cents,
-			:installment_fee_amount,
-			:intermediation_rate_amount,
-			:intermediation_fee_amount,
-			:net_value_cents,
-			:extra_value_cents,
-			:installment_count,
-			:item_count,
-			:code,
-			:payment_method_code,
-			:authorizationCode,
-			:nsu,
-			:tid,
-			:establishment_code,
-			:acquirer_Name,
-			:primary_receiver_key,
-			:date,
-			:transaction_date,
-			:last_event_date
-		)
-	end
+  def set_recharge
+    value = params[:amount].gsub(',','.')
+    @card_info = {
+      'amount': value,
+      'cardNumber': params[:card_number],
+      'cardCvv': params[:card_cvv],
+      'cardExpirationMonth': params[:card_expiration_month],
+      'cardExpirationYear': params[:card_expiration_year]
+    }
+  end
 end
