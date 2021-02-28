@@ -12,7 +12,7 @@ RSpec.describe Recharge, type: :model do
 	it "has a valid recharge" do
     expect(build(:recharge)).to be_valid
   end
-
+	
 	describe "Recharge validations" do
     # Basic validations
 		it { is_expected.to validate_presence_of(:pagseguro_payment_method) }
@@ -30,6 +30,23 @@ RSpec.describe Recharge, type: :model do
 		it { is_expected.to validate_numericality_of(:installment_count).only_integer }
 		it { is_expected.to validate_numericality_of(:item_count).is_greater_than(0) }
 		it { is_expected.to validate_numericality_of(:item_count).only_integer }
+
+    # Format validations
+		it { is_expected.to allow_value(0).for(:gross_value_cents) }
+		it { is_expected.to_not allow_value(-1).for(:gross_value_cents) }
+		it { is_expected.to allow_value(0).for(:discount_value_cents) }
+		it { is_expected.to allow_value(0.0).for(:installment_fee_amount) }
+		it { is_expected.to allow_value(0.0).for(:intermediation_rate_amount) }
+		it { is_expected.to allow_value(0.0).for(:intermediation_fee_amount) }
+		it { is_expected.to allow_value(0).for(:net_value_cents) }
+		it { is_expected.to_not allow_value(-1).for(:net_value_cents) }
+		it { is_expected.to allow_value(0).for(:extra_value_cents) }
+		it { is_expected.to_not allow_value(-1).for(:extra_value_cents) }
+		it { is_expected.to_not allow_value(0).for(:installment_count) }
+		it { is_expected.to allow_value(1).for(:installment_count) }
+		it { is_expected.to_not allow_value(0).for(:item_count) }
+		it { is_expected.to allow_value(1).for(:item_count) }
+
   end
 
   context 'Associations' do
