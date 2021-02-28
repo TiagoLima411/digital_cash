@@ -7,11 +7,29 @@ RSpec.describe Recharge, type: :model do
     @user = create(:user)
     @recharge[:user_id] = @user.id
     @response_credit_card = response_credit_card_mock
+	end
+	
+	it "has a valid recharge" do
+    expect(build(:recharge)).to be_valid
   end
 
-  context 'Validates' do
-    it { is_expected.to validate_presence_of(:pagseguro_payment_method) }
-    it { is_expected.to validate_presence_of(:pagseguro_status) }
+	describe "Recharge validations" do
+    # Basic validations
+		it { is_expected.to validate_presence_of(:pagseguro_payment_method) }
+		it { is_expected.to validate_presence_of(:pagseguro_status) }
+		it { is_expected.to validate_numericality_of(:gross_value_cents).is_greater_than_or_equal_to(0) }
+		it { is_expected.to validate_numericality_of(:gross_value_cents).only_integer }
+		it { is_expected.to validate_numericality_of(:discount_value_cents).only_integer }
+		it { is_expected.to validate_numericality_of(:installment_fee_amount) }
+		it { is_expected.to validate_numericality_of(:intermediation_rate_amount) }
+		it { is_expected.to validate_numericality_of(:intermediation_fee_amount) }
+		it { is_expected.to validate_numericality_of(:net_value_cents).is_greater_than_or_equal_to(0) }
+		it { is_expected.to validate_numericality_of(:net_value_cents).only_integer }
+		it { is_expected.to validate_numericality_of(:extra_value_cents).only_integer }
+		it { is_expected.to validate_numericality_of(:installment_count).is_greater_than(0) }
+		it { is_expected.to validate_numericality_of(:installment_count).only_integer }
+		it { is_expected.to validate_numericality_of(:item_count).is_greater_than(0) }
+		it { is_expected.to validate_numericality_of(:item_count).only_integer }
   end
 
   context 'Associations' do
@@ -60,6 +78,8 @@ RSpec.describe Recharge, type: :model do
     	expect(extract.description).to eq(income.description)
     	expect(extract.type_register).to eq('credit')
 		end
+
+
   end
 
   private

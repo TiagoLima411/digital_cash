@@ -5,13 +5,23 @@ class Recharge < ApplicationRecord
 	validates :pagseguro_payment_method, presence: true
 	validates :pagseguro_status, presence: true
 
+	validates_numericality_of :gross_value_cents, only_integer: true, greater_than_or_equal_to: 0
+	validates_numericality_of :discount_value_cents, only_integer: true
+	validates_numericality_of :net_value_cents, only_integer: true, greater_than_or_equal_to: 0
+	validates_numericality_of :extra_value_cents, only_integer: true, greater_than_or_equal_to: 0
+	validates_numericality_of :installment_count, only_integer: true, greater_than: 0
+	validates_numericality_of :item_count, only_integer: true, greater_than: 0
+	validates_numericality_of :installment_fee_amount, decimal: true
+	validates_numericality_of :intermediation_rate_amount, decimal: true
+	validates_numericality_of :intermediation_fee_amount, decimal: true
+
 	after_save :generate_extract, if: :saved_change_to_pagseguro_status?
 	after_save :generate_history, if: :saved_change_to_pagseguro_status?
-	
+
 	enum pagseguro_payment_method: %i[others credit_card billet debit_online]
 	enum pagseguro_status: %i[undefined awaiting_payment in_analysis paid available in_dispute returned canceled]
 	attr_accessor :description
-	
+
 	def self.generate_credit_cad(args, user)
 		recharge = Recharge.new
 		transaction = args['transaction']
