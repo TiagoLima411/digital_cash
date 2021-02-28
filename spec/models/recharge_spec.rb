@@ -36,7 +36,30 @@ RSpec.describe Recharge, type: :model do
   end
 
   context 'Instance Methods' do
-    it { expect { create(:recharge) }.to change { PagseguroHistory.all.size }.by(1) }
+		it { expect { create(:recharge) }.to change { PagseguroHistory.all.size }.by(1) }
+	
+		it 'Should generate extract when pagseguro_status paid' do
+			recharge = Recharge.generate_credit_cad(@response_credit_card, @user)
+			expect(recharge.pagseguro_status).to eq('paid')
+			
+			history = PagseguroHistory.where(recharge: recharge).last
+			expect(history.recharge).to eq(recharge)
+			expect(history.status).to eq(recharge.pagseguro_status)
+
+			income = Income.find_by(reference_id: recharge.id)
+			expect(income.value_cents).to eq(recharge.net_value_cents)
+			expect(income.reference_id).to eq(recharge.id)
+			expect(income.user_id).to eq(@user.id)
+
+			extract = AccountExtract.find_by(reference_id: income.id)
+			expect(extract.reference_id).to eq(income.id)
+			expect(extract.user_id).to eq(@user.id)
+    	expect(extract.value_cents).to eq(income.value_cents)
+			expect(extract.account_balance).to eq(income.user.account_balance)
+    	expect(extract.balance_cents).to eq(income.user.account_balance.available_value_cents - income.value_cents)
+    	expect(extract.description).to eq(income.description)
+    	expect(extract.type_register).to eq('credit')
+		end
   end
 
   private
@@ -47,7 +70,7 @@ RSpec.describe Recharge, type: :model do
 				"date"=>"2021-02-12T17:16:30.000-03:00",
 				"code"=>"A07D4887-19B8-49F3-95DE-B727D5572C2E",
 				"type"=>"1",
-				"status"=>"1",
+				"status"=>"3",
 				"lastEventDate"=>"2021-02-12T17:16:30.000-03:00",
 				"paymentMethod"=>{"type"=>"1", "code"=>"101"},
 				"grossAmount"=>"11.00",

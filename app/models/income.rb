@@ -6,7 +6,7 @@ class Income < ApplicationRecord
 
   monetize :value_cents
   
-  enum intype: %i[deposit transfer]
+  enum intype: %i[deposit transfer recharge_credit_card]
 
   scope :incomes_in_month, ->(date) {
     where(created_at: [date.beginning_of_month.beginning_of_day..date.end_of_month.end_of_day])
@@ -24,6 +24,20 @@ class Income < ApplicationRecord
     income.save
 
   end
+
+  def self.generate_credit_card(recharge_credit_card)
+    net_value = format_value_cents(recharge_credit_card.net_value_cents) 
+
+    income = Income.new
+    income.user = recharge_credit_card.user
+    income.intype = :recharge_credit_card
+    income.value_cents = recharge_credit_card.net_value_cents
+    income.description = recharge_credit_card.description
+    income.reference_id = recharge_credit_card.id
+
+    income.save
+
+  end
   
   def generate_history
     AccountExtract.generate_credit(self)
@@ -32,7 +46,9 @@ class Income < ApplicationRecord
   def update_account_balance
     balance = AccountBalance.find_by(user_id: self.user_id)
     balance.with_lock do
-      balance.update(available_value_cents: balance.available_value_cents + self.value_cents) if self.intype.eql?("deposit") || self.intype.eql?("transfer")
+      if deposit? || transfer? || recharge_credit_card?
+        balance.update(available_value_cents: balance.available_value_cents + self.value_cents)
+      end
     end
   end
 

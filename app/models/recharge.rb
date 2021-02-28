@@ -5,10 +5,12 @@ class Recharge < ApplicationRecord
 	validates :pagseguro_payment_method, presence: true
 	validates :pagseguro_status, presence: true
 
+	after_save :generate_extract, if: :saved_change_to_pagseguro_status?
 	after_save :generate_history, if: :saved_change_to_pagseguro_status?
 	
 	enum pagseguro_payment_method: %i[others credit_card billet debit_online]
 	enum pagseguro_status: %i[undefined awaiting_payment in_analysis paid available in_dispute returned canceled]
+	attr_accessor :description
 	
 	def self.generate_credit_cad(args, user)
 		recharge = Recharge.new
@@ -37,6 +39,7 @@ class Recharge < ApplicationRecord
 		recharge.date = transaction['date'].to_time
 		recharge.transaction_date = transaction['date'].to_time
 		recharge.last_event_date = transaction['lastEventDate'].to_time
+		recharge.description = transaction['items']['item']['description']
 
 		recharge if recharge.save
 	end
@@ -60,6 +63,10 @@ class Recharge < ApplicationRecord
 	def self.to_cents(value)
 		(value.to_f * 100).to_i
 	end
+
+	def generate_extract
+		Income.generate_credit_card(self) if paid?
+  end
 
 	def generate_history
 		PagseguroHistory.generate(self)
