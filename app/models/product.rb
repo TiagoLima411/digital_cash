@@ -1,4 +1,4 @@
 class Product < ApplicationRecord
-  belongs_to :Category, optional: true
-  belongs_to :Invoice, optional: true
+  belongs_to :category, optional: true
+  belongs_to :invoice, optional: true
 end
