@@ -188,8 +188,8 @@ GEM
     http-form_data (2.3.0)
     http-parser (1.2.3)
       ffi-compiler (>= 1.0, < 2.0)
-    httparty (0.13.7)
-      json (~> 1.8)
+    httparty (0.18.1)
+      mime-types (~> 3.0)
       multi_xml (>= 0.5.2)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
@@ -211,7 +211,6 @@ GEM
     jquery-turbolinks (2.1.0)
       railties (>= 3.1.0)
       turbolinks
-    json (1.8.6)
     jsonapi-renderer (0.2.2)
     jwt (2.2.3)
     kartograph (0.2.8)
@@ -488,7 +487,7 @@ DEPENDENCIES
   flipclockjs-rails (~> 0.7.7)
   fun_sftp
   haml
-  httparty (~> 0.13.7)
+  httparty (>= 0.13.7)
   image_processing (~> 1.8)
   jbuilder (~> 2.5)
   jquery-fileupload-rails
