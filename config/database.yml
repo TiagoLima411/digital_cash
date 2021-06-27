@@ -14,7 +14,7 @@ default: &default
   encoding: utf8
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
-  password: root
+  password: Root_P4$$
 
 development:
   <<: *default
@@ -55,7 +55,7 @@ homologation:
   <<: *default
   database: digital_cash_homologation #onpax_licenciado_production
   username: root
-  password: #password
+  password: root
   variables:
     sql_mode: TRADITIONAL
 
