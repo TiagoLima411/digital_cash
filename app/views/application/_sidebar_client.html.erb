@@ -11,18 +11,18 @@
           </li>
         </ul>
       </li>
-        <li class=" nav-item" id="cadastro-user">
-          <a href="#"><i><%= image_tag "cadastrar_ico.svg", width:"20px" %></i><span class="menu-title" data-i18n="">Conta</span></a>
-          <% if current_user.account.nil? %>
-            <ul class="menu-content">
-              <li class="" id="my-account-user"><a class="menu-item" href="/accounts/new">Cadastrar Conta</li>
-            </ul>
-          <% elsif current_user.account.active %>
-            <ul class="menu-content">
-              <li class="" id="my-account-user"><a class="menu-item" href="/accounts/<%= current_user.account.id %>/edit">Editar</a></li>
-            </ul>
-          <% end %>
-        </li>
+      <li class=" nav-item" id="cadastro-user">
+        <a href="#"><i><%= image_tag "cadastrar_ico.svg", width:"20px" %></i><span class="menu-title" data-i18n="">Conta</span></a>
+        <% if current_user.account.nil? %>
+          <ul class="menu-content">
+            <li class="" id="my-account-user"><a class="menu-item" href="/accounts/new">Cadastrar Conta</li>
+          </ul>
+        <% elsif current_user.account.active %>
+          <ul class="menu-content">
+            <li class="" id="my-account-user"><a class="menu-item" href="/accounts/<%= current_user.account.id %>/edit">Editar</a></li>
+          </ul>
+        <% end %>
+      </li>
       <% unless current_user.account.nil? %>
         <li class=" nav-item" id="finances-user">
           <a href="#"><i><%= image_tag "transacoes_menu_icon.svg", width:"20px" %></i><span class="menu-title" data-i18n="">Financeiro</span></a>
@@ -36,6 +36,13 @@
           <% end %>
         </li>
       <% end %>
+      <li class=" nav-item" id="products">
+        <a href="#"><i><%= image_tag "transacoes_menu_icon.svg", width:"20px" %></i><span class="menu-title" data-i18n="">Produtos</span></a>
+        <ul class="menu-content">
+          <li class="" id="products-index"><a class="menu-item" href="/products">Produtos</a></li>
+          <li class="" id="withdral"><a class="menu-item" href="/products/new">Cadastrar</a></li>
+        </ul>
+      </li>
 
     </ul>
   </div>
@@ -62,8 +69,13 @@
       document.querySelector('#withdral').classList.add('active');
       document.querySelector('#finances-user').classList.remove('hover');
       document.querySelector('#finances-user').classList.add('open');
-    } 
-    
+
+    } else if (window.location.pathname == "/products"){
+      document.querySelector('#products-index').classList.add('active');
+      document.querySelector('#products').classList.remove('hover');
+      document.querySelector('#products').classList.add('open');
+    }
+
   });
 
 </script>
