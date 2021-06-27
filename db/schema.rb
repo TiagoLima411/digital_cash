@@ -185,10 +185,10 @@ ActiveRecord::Schema.define(version: 2021_06_06_201915) do
     t.bigint "invoice_id"
     t.string "name"
     t.string "bar_code"
-    t.integer "purchase_price"
-    t.integer "sale_price"
-    t.integer "spread"
-    t.decimal "spread_fee", precision: 10
+    t.integer "purchase_price_cents"
+    t.integer "sale_price_cents"
+    t.integer "spread_cents"
+    t.decimal "spread_fee", precision: 5, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["category_id"], name: "index_products_on_category_id"
