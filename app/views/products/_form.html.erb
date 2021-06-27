@@ -14,75 +14,78 @@
     </div>
   <% end %>
 
-    <fieldset>
-      <div class="row">
-        <div class="col-12">
-          <h4 class="form-section">Dados do Produto</h4>
-        </div>
+  <fieldset>
+    <div class="row">
+      <div class="col-12">
+        <h4 class="form-section">Dados do Produto</h4>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-0">
+        <fieldset class="form-group">
+          <span class="danger">*</span>
+          <%= f.label "Categoria", class: "" %>
+          <%= f.collection_select(:category_id, Category.all, :id, :name, { include_blank: "" }, class: "select2 form-control", style:"width: 100%") %>
+        </fieldset>
       </div>
 
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-0">
-          <fieldset class="form-group">
-            <span class="danger">*</span>
-            <%= f.label "Categoria", class: "" %>
-            <%= f.collection_select(:category_id, Category.all, :id, :name, { include_blank: "" }, class: "select2 form-control", style:"width: 100%") %>
-          </fieldset>
-        </div>
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-0">
+        <fieldset class="form-group">
+          <span class="danger">*</span>
+          <%= f.label "Nota Fiscal", class: "" %>
+          <%= f.collection_select(:category_id, Invoice.all, :id, :name, { include_blank: "" }, class: "select2 form-control", style:"width: 100%") %>
+        </fieldset>
+      </div>
+    </div>
 
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-0">
-          <fieldset class="form-group">
-            <span class="danger">*</span>
-            <%= f.label "Nota Fiscal", class: "" %>
-            <%= f.collection_select(:category_id, Invoice.all, :id, :name, { include_blank: "" }, class: "select2 form-control", style:"width: 100%") %>
-          </fieldset>
-        </div>
+    <div class="row">
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-0">
+        <fieldset class="form-group">
+          <span class="danger">*</span>
+          <%= f.label "Nome", class: "" %>
+          <%= f.text_field :name, required: true, class: "form-control" %>
+        </fieldset>
       </div>
 
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-0">
-          <fieldset class="form-group">
-            <span class="danger">*</span>
-            <%= f.label "Nome", class: "" %>
-            <%= f.text_field :name, required: true, class: "form-control" %>
-          </fieldset>
-        </div>
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-0">
+        <fieldset class="form-group">
+          <span class="danger">*</span>
+          <%= f.label "Código de Barras", class: "" %>
+          <%= f.text_field :bar_code, required: true, class: "form-control" %>
+        </fieldset>
+      </div>
+    </div>
 
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-0">
-          <fieldset class="form-group">
-            <span class="danger">*</span>
-            <%= f.label "Código de Barras", class: "" %>
-            <%= f.text_field :bar_code, required: true, class: "form-control" %>
-          </fieldset>
-        </div>
+    <div class="row">
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-0">
+        <fieldset class="form-group">
+          <span class="danger">*</span>
+          <%= f.label "Preço de Compra", class: "" %>
+          <%= f.text_field :purchase_price, required: true, class: "form-control currency" %>
+        </fieldset>
       </div>
 
-      <div class="row">
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-0">
-          <fieldset class="form-group">
-            <span class="danger">*</span>
-            <%= f.label "Preço de Compra", class: "" %>
-            <%= f.number_field :purchase_price, required: true, class: "form-control" %>
-          </fieldset>
-        </div>
+      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-0">
+        <fieldset class="form-group">
+          <span class="danger">*</span>
+          <%= f.label "Preço de Venda", class: "" %>
+          <%= f.text_field :sale_price, required: true, class: "form-control currency" %>
+        </fieldset>
+      </div>
+    </div>
 
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-0">
-          <fieldset class="form-group">
-            <span class="danger">*</span>
-            <%= f.label "Preço de Venda", class: "" %>
-            <%= f.number_field :sale_price, required: true, class: "form-control" %>
-          </fieldset>
+    <div class="col-12">
+      <div class="form-actions right">
+        <div class="row d-flex justify-content-end">
+          <div class="col-12 mb-1 justify-content-end">
+            <button type="submit" class="btn btn-outline-primary js-submit form-submit" onclick="javascript: submitForm()" id="btn_submit">
+              <i class="ft-check"></i> Salvar
+            </button>
+          </div>
         </div>
       </div>
+    </div>
 
-    </fieldset>
-
-<div class="row">
-  <div class="col s12 right-align">
-    <%= f.submit 'Salvar', :class=> "waves-effect waves-light btn-large" %>
-    <%= link_to 'Voltar', products_path, class: "waves-effect waves-light btn-large blue-grey lighten-3" %>
-  </div>
-</div>
-
-
+  </fieldset>
 <% end %>
