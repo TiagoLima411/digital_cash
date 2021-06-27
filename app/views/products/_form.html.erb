@@ -62,7 +62,7 @@
         <fieldset class="form-group">
           <span class="danger">*</span>
           <%= f.label "Preço de Compra", class: "" %>
-          <%= f.text_field :purchase_price, required: true, class: "form-control currency" %>
+          <%= f.text_field :purchase_price_cents, required: true, class: "form-control currency" %>
         </fieldset>
       </div>
 
@@ -70,7 +70,7 @@
         <fieldset class="form-group">
           <span class="danger">*</span>
           <%= f.label "Preço de Venda", class: "" %>
-          <%= f.text_field :sale_price, required: true, class: "form-control currency" %>
+          <%= f.text_field :sale_price_cents, required: true, class: "form-control currency" %>
         </fieldset>
       </div>
     </div>
