@@ -1,0 +1,114 @@
+<%= form_for(product) do |f| %>
+  <% if product.errors.any? %>
+    <div class="row">
+      <ul class="collection with-header animated fadeInUp">
+        <% if product.errors.count > 1 %>
+          <li class="collection-header"><h5><%= product.errors.count %> erros impediram que o registro fosse salvo:</h5></li>
+        <% else %>
+          <li class="collection-header"><h5><%= product.errors.count %> erro impediu que o registro fosse salvo:</h5></li>
+        <% end %>
+        <% product.errors.full_messages.each do |message| %>
+          <li class="collection-item valign-wrapper"><i class="material-icons">error_outline</i>&nbsp;<span> <%= message %></span></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <div class="input-field">
+                <div class="row">
+            <div class="col s12">
+              <div class="input-field">
+                <%= f.text_field :category_id %>
+                <%= f.label :Category_id %>
+              </div>
+            </div>
+          </div>
+            </div>
+
+    <div class="input-field">
+                <div class="row">
+            <div class="col s12">
+              <div class="input-field">
+                <%= f.text_field :invoice_id %>
+                <%= f.label :Invoice_id %>
+              </div>
+            </div>
+          </div>
+            </div>
+
+    <div class="input-field">
+                <div class="row">
+            <div class="col s12">
+              <div class="input-field">
+                <%= f.text_field :name %>
+                <%= f.label :name %>
+              </div>
+            </div>
+          </div>
+            </div>
+
+    <div class="input-field">
+                <div class="row">
+            <div class="col s12">
+              <div class="input-field">
+                <%= f.text_field :bar_code %>
+                <%= f.label :bar_code %>
+              </div>
+            </div>
+          </div>
+            </div>
+
+    <div class="input-field">
+                <div class="row">
+            <div class="col s12">
+              <div class="input-field">
+                <%= f.number_field :purchase_price %>
+                <%= f.label :purchase_price %>
+              </div>
+            </div>
+          </div>
+            </div>
+
+    <div class="input-field">
+                <div class="row">
+            <div class="col s12">
+              <div class="input-field">
+                <%= f.number_field :sale_price %>
+                <%= f.label :sale_price %>
+              </div>
+            </div>
+          </div>
+            </div>
+
+    <div class="input-field">
+                <div class="row">
+            <div class="col s12">
+              <div class="input-field">
+                <%= f.number_field :spread %>
+                <%= f.label :spread %>
+              </div>
+            </div>
+          </div>
+            </div>
+
+    <div class="input-field">
+                <div class="row">
+            <div class="col s12">
+              <div class="input-field">
+                <%= f.text_field :spread_fee %>
+                <%= f.label :spread_fee %>
+              </div>
+            </div>
+          </div>
+            </div>
+
+
+<div class="row">
+  <div class="col s12 right-align">
+    <%= f.submit 'Salvar', :class=> "waves-effect waves-light btn-large" %>
+    <%= link_to 'Voltar', products_path, class: "waves-effect waves-light btn-large blue-grey lighten-3" %>
+  </div>
+</div>
+
+
+<% end %>

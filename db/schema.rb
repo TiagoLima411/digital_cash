@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_16_172616) do
+ActiveRecord::Schema.define(version: 2021_06_06_201915) do
 
-  create_table "account_balances", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "account_balances", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.bigint "user_id"
     t.integer "available_value_cents"
     t.datetime "created_at", null: false
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_172616) do
     t.index ["user_id"], name: "index_account_balances_on_user_id"
   end
 
-  create_table "account_extracts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "account_extracts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "account_balance_id"
     t.integer "reference_id"
@@ -34,7 +34,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_172616) do
     t.index ["user_id"], name: "index_account_extracts_on_user_id"
   end
 
-  create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "accounts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "bank_id"
     t.boolean "active", default: true
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_172616) do
     t.index ["user_id"], name: "index_accounts_on_user_id"
   end
 
-  create_table "bank_transactions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "bank_transactions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.bigint "user_id"
     t.integer "benefited_user_id"
     t.integer "spread_fee_cents"
@@ -60,23 +60,29 @@ ActiveRecord::Schema.define(version: 2021_02_16_172616) do
     t.index ["user_id"], name: "index_bank_transactions_on_user_id"
   end
 
-  create_table "banks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "banks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "name"
     t.string "code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "cities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "cities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.bigint "state_id"
-    t.boolean "capitol"
+    t.string "name"
+    t.boolean "capital"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["state_id"], name: "index_cities_on_state_id"
   end
 
-  create_table "crypto_currencies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "crypto_currencies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "coin_id"
     t.string "symbol"
     t.string "name"
@@ -84,14 +90,14 @@ ActiveRecord::Schema.define(version: 2021_02_16_172616) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "currencies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "currencies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "symbol"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "incomes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "incomes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.bigint "user_id"
     t.integer "intype"
     t.integer "reference_id"
@@ -102,7 +108,14 @@ ActiveRecord::Schema.define(version: 2021_02_16_172616) do
     t.index ["user_id"], name: "index_incomes_on_user_id"
   end
 
-  create_table "logged_exceptions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "invoices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+    t.string "code"
+    t.integer "kind"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "logged_exceptions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "exception_class"
     t.string "controller_name"
     t.string "action_name"
@@ -113,7 +126,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_172616) do
     t.datetime "created_at"
   end
 
-  create_table "members", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "members", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.date "birthday"
@@ -137,7 +150,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_172616) do
     t.index ["state_id"], name: "index_members_on_state_id"
   end
 
-  create_table "nobe_revenues", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "nobe_revenues", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "bank_transaction_id"
     t.string "description"
@@ -148,7 +161,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_172616) do
     t.index ["user_id"], name: "index_nobe_revenues_on_user_id"
   end
 
-  create_table "outgoings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "outgoings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.bigint "user_id"
     t.integer "outtype"
     t.integer "reference_id"
@@ -159,7 +172,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_172616) do
     t.index ["user_id"], name: "index_outgoings_on_user_id"
   end
 
-  create_table "pagseguro_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "pagseguro_histories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.bigint "recharge_id"
     t.integer "status"
     t.datetime "created_at", null: false
@@ -167,7 +180,22 @@ ActiveRecord::Schema.define(version: 2021_02_16_172616) do
     t.index ["recharge_id"], name: "index_pagseguro_histories_on_recharge_id"
   end
 
-  create_table "rate_settings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+    t.bigint "category_id"
+    t.bigint "invoice_id"
+    t.string "name"
+    t.string "bar_code"
+    t.integer "purchase_price"
+    t.integer "sale_price"
+    t.integer "spread"
+    t.decimal "spread_fee", precision: 10
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_products_on_category_id"
+    t.index ["invoice_id"], name: "index_products_on_invoice_id"
+  end
+
+  create_table "rate_settings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.integer "day_of_week"
     t.integer "rate_cents"
     t.integer "alternative_rate_cents"
@@ -177,7 +205,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_172616) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "recharges", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "recharges", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.bigint "user_id"
     t.integer "pagseguro_status", default: 0, null: false
     t.integer "pagseguro_payment_method", default: 0, null: false
@@ -206,14 +234,14 @@ ActiveRecord::Schema.define(version: 2021_02_16_172616) do
     t.index ["user_id"], name: "index_recharges_on_user_id"
   end
 
-  create_table "states", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "states", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "name"
     t.string "uf"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.string "username", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "payment_password"
@@ -249,6 +277,8 @@ ActiveRecord::Schema.define(version: 2021_02_16_172616) do
   add_foreign_key "nobe_revenues", "users"
   add_foreign_key "outgoings", "users"
   add_foreign_key "pagseguro_histories", "recharges"
+  add_foreign_key "products", "categories"
+  add_foreign_key "products", "invoices"
   add_foreign_key "recharges", "users"
   add_foreign_key "users", "members"
 end
