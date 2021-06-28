@@ -34,7 +34,7 @@
         <fieldset class="form-group">
           <span class="danger">*</span>
           <%= f.label "Nota Fiscal", class: "" %>
-          <%= f.collection_select(:category_id, Invoice.all, :id, :name, { include_blank: "" }, class: "select2 form-control", style:"width: 100%") %>
+          <%= f.collection_select(:invoice_id, Invoice.all, :id, :name, { include_blank: "" }, class: "select2 form-control", style:"width: 100%") %>
         </fieldset>
       </div>
     </div>

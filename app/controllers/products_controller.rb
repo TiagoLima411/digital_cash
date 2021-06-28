@@ -21,6 +21,8 @@ class ProductsController < ApplicationController
   def create
     @product = Product.new(product_params)
 
+    binding.pry
+
     respond_to do |format|
       if @product.save
         format.html { redirect_to products_path, notice: 'Product was successfully created.' }
@@ -66,8 +68,8 @@ class ProductsController < ApplicationController
     params
       .require(:product)
       .permit(
-        :Category_id,
-        :Invoice_id,
+        :category_id,
+        :invoice_id,
         :name,
         :bar_code,
         :purchase_price_cents,
