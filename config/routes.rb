@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
-  resources :products
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  mount ExceptionLogger::Engine => "/exception_logger"
+  mount ExceptionLogger::Engine => '/exception_logger'
   # Devise
   devise_for :users, skip: %i[registrations], controllers: { sessions: 'sessions' }
   devise_scope :user do
@@ -22,7 +21,7 @@ Rails.application.routes.draw do
   resources :members, except: [:index]
 
   # USERS
-  resources :users, only: [:index, :show, :edit, :update]
+  resources :users, only: %i[index show edit update]
 
   # Cities
   get 'get_cities', to: 'cities#get_cities_by_state'
@@ -39,22 +38,24 @@ Rails.application.routes.draw do
   resources :account_extracts, only: [:index]
 
   # Incomes
-  #resources :incomes, only: [:new, :create]
+  # resources :incomes, only: [:new, :create]
 
   # Outgoing
-  resources :outgoings, only: [:new, :create] 
+  resources :outgoings, only: %i[new create]
 
-  resources :bank_transactions, only: [:new, :create]
+  resources :bank_transactions, only: %i[new create]
 
   # Recharges
-  resources :recharges, only: [:new, :create]
+  resources :recharges, only: %i[new create]
   post '/send_card_transaction', to: 'recharges#send_card_transaction'
 
   # SessionPayments (Middlewares)
   get '/outgoing_payment_password', to: 'session_payments#middleware_outgoing_payment_password'
   get '/bank_transaction_payment_password', to: 'session_payments#middleware_bank_transaction_payment_password'
 
-  namespace :api, defaults: {format: :json} do
+  resources :products, except: [:show]
+
+  namespace :api, defaults: { format: :json } do
     # CoinGueck paths
     get 'coins/list', to: 'coingecko#index'
 
@@ -62,5 +63,4 @@ Rails.application.routes.draw do
     get 'persist_coins_list', to: 'utils#persist_coins_list'
     get 'persist_vs_currency', to: 'utils#persist_vs_currency'
   end
-
 end
