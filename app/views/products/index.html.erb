@@ -50,6 +50,7 @@
                     <th class="text-center">Spread</th>
                     <th class="text-center">Criado em.</th>
                     <th class="text-center">Atualizado em.</th>
+                    <th>Acões</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -64,6 +65,16 @@
                       <td class="text-center"><%= product.spread_fee %></td>
                       <td class="text-center"><%= br_date_format(product.created_at) %></td>
                       <td class="text-center"><%= br_date_format(product.updated_at) %></td>
+                      <td class="text-left cel-options">
+                        <a href="#" class="dropdown-toggle btn btn-sm btn-outline-secondary btn-icon btn-option" data-toggle="dropdown" title="Opções" aria-haspopup="true" aria-expanded="true"><i class="fa fa-ellipsis-h"></i></a>
+                        <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+                          <ul class="nav nav-hoverable flex-column">
+                            <li class="nav-item">
+                              <%= link_to '<i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;Editar Produto'.html_safe, edit_product_path(product), data: { turbolinks: false }, class: "nav-link" %>
+                            </li>
+                          </ul>
+                        </div>
+                      </td>
                     </tr>
                   <% end %>
                 </tbody>
