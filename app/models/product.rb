@@ -1,6 +1,7 @@
 class Product < ApplicationRecord
   belongs_to :category, optional: true
   belongs_to :invoice, optional: true
+  has_one :inventory
 
   before_save :set_spread
 

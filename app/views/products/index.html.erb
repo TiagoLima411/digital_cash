@@ -72,6 +72,9 @@
                             <li class="nav-item">
                               <%= link_to '<i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;Editar Produto'.html_safe, edit_product_path(product), data: { turbolinks: false }, class: "nav-link" %>
                             </li>
+                            <li class="nav-item">
+                              <%= link_to '<i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;Adicionar ao Estoque'.html_safe, new_inventory_path, data: { turbolinks: false }, class: "nav-link" %>
+                            </li>
                           </ul>
                         </div>
                       </td>

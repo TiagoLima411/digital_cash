@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_06_201915) do
+ActiveRecord::Schema.define(version: 2021_06_30_103556) do
 
   create_table "account_balances", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
     t.bigint "user_id"
@@ -106,6 +106,14 @@ ActiveRecord::Schema.define(version: 2021_06_06_201915) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_incomes_on_user_id"
+  end
+
+  create_table "inventories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
+    t.bigint "product_id"
+    t.integer "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_inventories_on_product_id"
   end
 
   create_table "invoices", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
@@ -271,6 +279,7 @@ ActiveRecord::Schema.define(version: 2021_06_06_201915) do
   add_foreign_key "bank_transactions", "users"
   add_foreign_key "cities", "states"
   add_foreign_key "incomes", "users"
+  add_foreign_key "inventories", "products"
   add_foreign_key "members", "cities"
   add_foreign_key "members", "states"
   add_foreign_key "nobe_revenues", "bank_transactions"
