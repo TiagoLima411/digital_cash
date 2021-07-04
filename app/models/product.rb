@@ -5,6 +5,9 @@ class Product < ApplicationRecord
 
   before_save :set_spread
 
+  monetize :sale_price_cents
+  monetize :purchase_price_cents
+
   def set_spread
     self.spread_cents = sale_price_cents - purchase_price_cents
     self.spread_fee = ((spread_cents * 100) / purchase_price_cents).to_d

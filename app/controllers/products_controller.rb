@@ -66,8 +66,8 @@ class ProductsController < ApplicationController
         :invoice_id,
         :name,
         :bar_code,
-        :purchase_price_cents,
-        :sale_price_cents
+        :purchase_price,
+        :sale_price
       )
   end
 end

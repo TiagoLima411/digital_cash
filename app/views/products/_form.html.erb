@@ -29,14 +29,6 @@
           <%= f.collection_select(:category_id, Category.all, :id, :name, { include_blank: "" }, class: "select2 form-control", style:"width: 100%") %>
         </fieldset>
       </div>
-
-      <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-0">
-        <fieldset class="form-group">
-          <span class="danger">*</span>
-          <%= f.label "Nota Fiscal", class: "" %>
-          <%= f.collection_select(:invoice_id, Invoice.all, :id, :name, { include_blank: "" }, class: "select2 form-control", style:"width: 100%") %>
-        </fieldset>
-      </div>
     </div>
 
     <div class="row">
@@ -62,7 +54,7 @@
         <fieldset class="form-group">
           <span class="danger">*</span>
           <%= f.label "Preço de Compra", class: "" %>
-          <%= f.text_field :purchase_price_cents, required: true, class: "form-control currency" %>
+          <%= f.text_field :purchase_price, required: true, class: "form-control currency" %>
         </fieldset>
       </div>
 
@@ -70,7 +62,7 @@
         <fieldset class="form-group">
           <span class="danger">*</span>
           <%= f.label "Preço de Venda", class: "" %>
-          <%= f.text_field :sale_price_cents, required: true, class: "form-control currency" %>
+          <%= f.text_field :sale_price, required: true, class: "form-control currency" %>
         </fieldset>
       </div>
     </div>
