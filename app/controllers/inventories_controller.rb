@@ -1,5 +1,4 @@
 class InventoriesController < ApplicationController
-
   def index
     @products = Inventory.all
   end
@@ -9,11 +8,10 @@ class InventoriesController < ApplicationController
   end
 
   def create
-    @inventory = Inventory.new(inventory_params)
     respond_to do |format|
-      if @inventory.save
-        format.html { redirect_to new_inventory_path, notice: 'Product was successfully created.' }
-        format.json { render :show, status: :created, location: @inventory }
+      @inventory = Inventory.generate(inventory_params, current_user)
+      if @inventory
+        format.html { redirect_to new_inventory_path, notice: 'O Produto foi adicionado ao estoque.' }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @inventory.errors, status: :unprocessable_entity }
@@ -26,7 +24,7 @@ class InventoriesController < ApplicationController
       .require(:inventory)
       .permit(
         :product_id,
-        :amount,
+        :amount
       )
   end
 end

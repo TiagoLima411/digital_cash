@@ -25,7 +25,7 @@
       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-0">
         <fieldset class="form-group">
           <span class="danger">*</span>
-          <%= f.label "Categoria", class: "" %>
+          <%= f.label "Produto", class: "" %>
           <%= f.collection_select(:product_id, Product.all, :id, :name, { include_blank: "" }, class: "select2 form-control", style:"width: 100%") %>
         </fieldset>
       </div>
@@ -33,7 +33,7 @@
       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-0">
         <fieldset class="form-group">
           <span class="danger">*</span>
-          <%= f.label "Nome", class: "" %>
+          <%= f.label "Quantidade", class: "" %>
           <%= f.number_field :amount, required: true, class: "form-control" %>
         </fieldset>
       </div>
