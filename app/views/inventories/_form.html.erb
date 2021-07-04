@@ -22,6 +22,14 @@
     </div>
 
     <div class="row">
+    <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-0">
+        <fieldset class="form-group">
+          <span class="danger">*</span>
+          <%= f.label "Tipo", class: "" %>
+          <%= select_tag(:kind, options_for_select(kinds, params[:kind]), { include_blank: false, class: " form-control" }) %>
+        </fieldset>
+      </div>
+
       <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 mb-0">
         <fieldset class="form-group">
           <span class="danger">*</span>
