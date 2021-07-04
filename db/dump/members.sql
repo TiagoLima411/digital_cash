@@ -57,7 +57,7 @@ CREATE TABLE `members` (
 
 LOCK TABLES `members` WRITE;
 /*!40000 ALTER TABLE `members` DISABLE KEYS */;
-INSERT INTO `members` VALUES (1,'Elon Musk','musk@sandbox.pagseguro.com.br','1971-06-28',0,'Maye Musk','668.881.100-60','38.546.086-7','(82)99999-9999','Rua Fortaleza','57072-313',69,2,'','44','Cidade Universitária','55',NULL,'2021-02-11 18:38:45','2021-02-11 18:38:45');
+INSERT INTO `members` VALUES (1,'Lucas Tenório','lucas@gmail.com','1971-06-28',0,'Meire de Tenório','668.881.100-60','38.546.086-7','(82)99999-9999','Rua Fortaleza','57072-313',69,2,'','44','Cidade Universitária','55',NULL,'2021-02-11 18:38:45','2021-02-11 18:38:45');
 /*!40000 ALTER TABLE `members` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
