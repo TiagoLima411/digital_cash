@@ -1,0 +1,65 @@
+<div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">Estoque</h4>
+          <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+          <div class="heading-elements">
+            <div class="content-header-right d-flex justify-content-end">
+              <button type="button" class="btn btn-secondary d-flex align-items-center mb-0 ml-1 px-2" data-toggle="modal" data-target="#default">
+                <i class="fa fa-search"></i>&nbsp;&nbsp;Pesquisar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-content collapse show">
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered">
+                <thead>
+                  <tr>
+                    <th class="text-center">Nome</th>
+                    <th class="text-center">Categoria</th>
+                    <th class="text-center">Qunatidade</th>
+                    <th class="text-center">Valor de compra</th>
+                    <th class="text-center">Valor de Venda</th>
+                    <th class="text-center">Criado em.</th>
+                    <th class="text-center">Atualizado em.</th>
+                    <!--<th>Acões</th>-->
+                  </tr>
+                </thead>
+                <tbody>
+                  <% Inventory.all.each do |inventory| %>
+                    <tr>
+                      <td class="text-center"><%= inventory.product.name %></td>
+                      <td class="text-center"><%= inventory.product.category&.name %></td>
+                      <td class="text-center"><%= inventory.amount %></td>
+                      <td class="text-center"><%= display_money(Money.new(inventory.product.purchase_price_cents * inventory.amount)) %></td>
+                      <td class="text-center"><%= display_money(Money.new(inventory.product.sale_price_cents * inventory.amount)) %></td>
+                      <td class="text-center"><%= br_date_format(inventory.created_at) %></td>
+                      <td class="text-center"><%= br_date_format(inventory.updated_at) %></td>
+                      <!--<td class="text-left cel-options">
+                        <a href="#" class="dropdown-toggle btn btn-sm btn-outline-secondary btn-icon btn-option" data-toggle="dropdown" title="Opções" aria-haspopup="true" aria-expanded="true"><i class="fa fa-ellipsis-h"></i></a>
+                        <div aria-labelledby="dropdownMenuLink" class="dropdown-menu">
+                          <ul class="nav nav-hoverable flex-column">
+                            <li class="nav-item">
+                              <%#= link_to '<i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;Editar Produto'.html_safe, edit_product_path(product), data: { turbolinks: false }, class: "nav-link" %>
+                            </li>
+                            <li class="nav-item">
+                              <%#= link_to '<i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;Adicionar ao Estoque'.html_safe, new_inventory_path, data: { turbolinks: false }, class: "nav-link" %>
+                            </li>
+                          </ul>
+                        </div>
+                      </td>-->
+                    </tr>
+                  <% end %>
+                </tbody>
+              </table>
+            </div>
+            <%#= will_paginate @products, previous_label: t("<"), next_label: t(">"), list_classes: %w(pagination justify-content-end mt-1) %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

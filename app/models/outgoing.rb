@@ -22,8 +22,8 @@ class Outgoing < ApplicationRecord
     outgoing = Outgoing.new
     outgoing.user = logged_user
     outgoing.outtype = Outgoing.outtypes[:inventory]
-    outgoing.value_cents = inventory.product.purchase_price_cents * inventory.amount
-    outgoing.description = "Compra de #{inventory.amount} #{inventory.product.name}"
+    outgoing.value_cents = (inventory.product.purchase_price_cents * inventory.amount_to_extract).to_i
+    outgoing.description = "Compra de #{inventory.amount_to_extract} #{inventory.product.name}"
     outgoing.reference_id = inventory.product.id
     outgoing.save
   end
