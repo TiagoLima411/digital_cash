@@ -74,8 +74,8 @@ ActiveRecord::Schema.define(version: 2021_06_30_103556) do
   end
 
   create_table "cities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb3", force: :cascade do |t|
-    t.bigint "state_id"
     t.string "name"
+    t.bigint "state_id"
     t.boolean "capital"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

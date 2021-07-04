@@ -15,7 +15,7 @@ unless Rails.env.production?
   end
 
 	connection.execute('SET FOREIGN_KEY_CHECKS = 1;')
-	dumps = %w[states.sql cities.sql banks.sql users.sql members.sql account_balances.sql]
+	dumps = %w[states.sql cities.sql banks.sql users.sql members.sql account_balances.sql accounts.sql categories.sql]
 	dumps.each do |file|
 		sql = File.read("db/dump/#{file}")
 		statements = sql.split(/;$/)
