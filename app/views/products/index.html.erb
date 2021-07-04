@@ -43,7 +43,6 @@
                   <tr>
                     <th class="text-center">Nome</th>
                     <th class="text-center">Categoria</th>
-                    <th class="text-center">NF</th>
                     <th class="text-center">Código de Barras</th>
                     <th class="text-center">Preço de Compra</th>
                     <th class="text-center">Preço de Venda</th>
@@ -56,12 +55,11 @@
                 <tbody>
                   <% @products.each do |product| %>
                     <tr>
-                      <td class="text-center">Ração para gato<%#= product.name %></td>
+                      <td class="text-center"><%= product.name %></td>
                       <td class="text-center"><%= product.category&.name %></td>
-                      <td class="text-center"><%= product&.invoice&.code %></td>
                       <td class="text-center"><%= product.bar_code %></td>
-                      <td class="text-center"><%= display_money(product.purchase_price_cents) %></td>
-                      <td class="text-center"><%= display_money(product.sale_price_cents) %></td>
+                      <td class="text-center"><%= display_money(Money.new(product.purchase_price_cents)) %></td>
+                      <td class="text-center"><%= display_money(Money.new(product.sale_price_cents)) %></td>
                       <td class="text-center"><%= product.spread_fee %></td>
                       <td class="text-center"><%= br_date_format(product.created_at) %></td>
                       <td class="text-center"><%= br_date_format(product.updated_at) %></td>
