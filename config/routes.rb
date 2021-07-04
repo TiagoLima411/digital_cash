@@ -38,7 +38,7 @@ Rails.application.routes.draw do
   resources :account_extracts, only: [:index]
 
   # Incomes
-  # resources :incomes, only: [:new, :create]
+  resources :incomes, only: [:new, :create]
 
   # Outgoing
   resources :outgoings, only: %i[new create]
